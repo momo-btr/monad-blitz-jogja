@@ -63,11 +63,11 @@ export default function Marketplace() {
         </div>
 
         <div className="flex gap-4">
-          <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-300 min-w-[150px]">
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-base-300 min-w-[150px]">
             <p className="text-sm text-base-content/60 font-medium mb-1">Floor Price</p>
             <p className="text-2xl font-bold text-base-content">320 <span className="text-sm font-normal text-base-content/60">MONAD</span></p>
           </div>
-          <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-300 min-w-[150px]">
+          <div className="bg-white p-4 rounded-xl shadow-sm border border-base-300 min-w-[150px]">
             <p className="text-sm text-base-content/60 font-medium mb-1">Total Volume</p>
             <p className="text-2xl font-bold text-base-content">12.4k <span className="text-sm font-normal text-base-content/60">MONAD</span></p>
           </div>
@@ -75,8 +75,8 @@ export default function Marketplace() {
       </div>
 
       {/* Filter Bar */}
-      <div className="bg-base-100 p-4 rounded-xl shadow-sm border border-base-300 flex flex-wrap gap-4 items-center">
-        <select className="select select-bordered bg-base-100 text-base-content border-base-300 w-full md:w-auto min-w-[160px] focus:outline-primary">
+      <div className="bg-white p-4 rounded-xl shadow-sm border border-base-300 flex flex-wrap gap-4 items-center">
+        <select className="select select-bordered bg-white text-base-content border-base-300 w-full md:w-auto min-w-[160px] focus:outline-primary">
           <option disabled selected>Region</option>
           <option>Sumatra</option>
           <option>Java</option>
@@ -87,14 +87,14 @@ export default function Marketplace() {
         <input
           type="text"
           placeholder="Price Range (MONAD)"
-          className="input input-bordered bg-base-100 text-base-content border-base-300 w-full md:w-auto min-w-[200px] focus:outline-primary"
+          className="input input-bordered bg-white text-base-content border-base-300 w-full md:w-auto min-w-[200px] focus:outline-primary"
         />
 
         <div className="join w-full md:w-auto">
           <input className="join-item btn btn-active bg-primary border-primary text-primary-content hover:bg-primary/90" type="radio" name="options" aria-label="All" defaultChecked />
-          <input className="join-item btn bg-base-100 border-base-300 text-base-content hover:bg-base-200" type="radio" name="options" aria-label="Agricultural" />
-          <input className="join-item btn bg-base-100 border-base-300 text-base-content hover:bg-base-200" type="radio" name="options" aria-label="Commercial" />
-          <input className="join-item btn bg-base-100 border-base-300 text-base-content hover:bg-base-200" type="radio" name="options" aria-label="Conservation" />
+          <input className="join-item btn bg-white border-base-300 text-base-content hover:bg-white" type="radio" name="options" aria-label="Agricultural" />
+          <input className="join-item btn bg-white border-base-300 text-base-content hover:bg-white" type="radio" name="options" aria-label="Commercial" />
+          <input className="join-item btn bg-white border-base-300 text-base-content hover:bg-white" type="radio" name="options" aria-label="Conservation" />
         </div>
 
         <button className="btn btn-ghost text-primary ml-auto">Clear Filters</button>
@@ -103,7 +103,7 @@ export default function Marketplace() {
       {/* Property Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
         {mockProperties.map((prop) => (
-          <div key={prop.id} className="card bg-base-100 shadow-sm border border-base-300 overflow-hidden hover:shadow-md transition-shadow">
+          <div key={prop.id} className="card bg-white shadow-sm border border-base-300 overflow-hidden hover:shadow-md transition-shadow">
             <figure className="h-48 relative overflow-hidden">
               <img src={prop.image} alt={prop.name} className="w-full h-full object-cover transition-transform hover:scale-105 duration-300" />
               {prop.verified && (
@@ -123,7 +123,7 @@ export default function Marketplace() {
               </div>
 
               {/* Tech Specs */}
-              <div className="grid grid-cols-2 gap-2 text-xs text-base-content/60 bg-base-200/50 p-3 rounded-lg mb-4">
+              <div className="grid grid-cols-2 gap-2 text-xs text-base-content/60 bg-white p-3 rounded-lg mb-4">
                 <div className="flex flex-col">
                   <span className="font-semibold">Soil Quality</span>
                   <span>{prop.soil}</span>

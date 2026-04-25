@@ -112,7 +112,7 @@ export default function PropertyDetails() {
           </div>
 
           {/* Technical Description */}
-          <div className="bg-base-100 p-8 rounded-2xl shadow-sm border border-base-300">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300">
             <h2 className="text-xl font-bold text-base-content mb-4">Property Overview</h2>
             <p className="text-base-content/80 leading-relaxed">
               {metadata?.description ||
@@ -121,7 +121,7 @@ export default function PropertyDetails() {
           </div>
 
           {/* Technical Specifications Grid */}
-          <div className="bg-base-100 p-8 rounded-2xl shadow-sm border border-base-300">
+          <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300">
             <h2 className="text-xl font-bold text-base-content mb-6">Technical Specifications</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {techSpecs.map((spec, idx) => (
@@ -136,8 +136,8 @@ export default function PropertyDetails() {
           </div>
 
           {/* Interactive Map */}
-          <div className="bg-base-100 rounded-2xl shadow-sm border border-base-300 overflow-hidden flex flex-col">
-            <div className="p-6 border-b border-base-200 flex justify-between items-center bg-base-100/50 backdrop-blur">
+          <div className="bg-white rounded-2xl shadow-sm border border-base-300 overflow-hidden flex flex-col">
+            <div className="p-6 border-b border-base-200 flex justify-between items-center bg-white/50 backdrop-blur">
               <h2 className="text-xl font-bold text-base-content flex items-center gap-2">
                 <GlobeAltIcon className="w-6 h-6 text-primary" />
                 Geospatial Boundaries
@@ -156,7 +156,7 @@ export default function PropertyDetails() {
           </div>
 
           {/* Provenance History */}
-          <div className="bg-base-100 rounded-2xl shadow-sm border border-base-300 overflow-hidden">
+          <div className="bg-white rounded-2xl shadow-sm border border-base-300 overflow-hidden">
             <div className="p-6 border-b border-base-200">
               <h2 className="text-xl font-bold text-base-content flex items-center gap-2">
                 <ArrowsRightLeftIcon className="w-6 h-6 text-primary" />
@@ -205,7 +205,7 @@ export default function PropertyDetails() {
         <div className="lg:w-1/3 space-y-6">
           {/* Transaction Card (Sticky) */}
           <div className="sticky top-24 space-y-6">
-            <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-300">
+            <div className="bg-white p-6 rounded-2xl shadow-lg border border-base-300">
               <div className="flex justify-between items-center mb-6">
                 <span className="text-base-content/60 font-medium">Asking Price</span>
                 <span className="badge badge-success bg-success/10 text-success border-none font-bold">Available</span>
@@ -258,7 +258,7 @@ export default function PropertyDetails() {
             </div>
 
             {/* On-Chain Assets / Documents */}
-            <div className="bg-base-100 p-6 rounded-2xl shadow-sm border border-base-300">
+            <div className="bg-white p-6 rounded-2xl shadow-sm border border-base-300">
               <h3 className="text-lg font-bold text-base-content mb-4">On-Chain Assets</h3>
               <div className="space-y-3">
                 {onChainAssets.map((doc, idx) => (
@@ -267,7 +267,7 @@ export default function PropertyDetails() {
                     className="flex items-center justify-between p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors cursor-pointer group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-base-100 rounded-lg shadow-sm text-primary group-hover:text-primary-content group-hover:bg-primary transition-colors">
+                      <div className="p-2 bg-white rounded-lg shadow-sm text-primary group-hover:text-primary-content group-hover:bg-primary transition-colors">
                         <DocumentArrowDownIcon className="w-5 h-5" />
                       </div>
                       <div>

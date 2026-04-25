@@ -16,9 +16,9 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="flex h-screen bg-base-100 text-base-content font-sans">
+    <div className="flex h-screen bg-white text-base-content font-sans">
       {/* Vertical Navigation */}
-      <aside className="w-64 bg-base-100 border-r border-base-300 flex flex-col justify-between p-4 z-10 shadow-sm">
+      <aside className="w-64 bg-white border-r border-base-300 flex flex-col justify-between p-4 z-10 shadow-sm">
         <div>
           <Link href="/" className="block mb-8 px-2">
             <h1 className="text-2xl font-bold text-primary tracking-tight">Terraforma</h1>
@@ -56,7 +56,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
       {/* Main Content Area */}
       <main className="flex-1 flex flex-col overflow-hidden bg-base-200/40">
         {/* Header */}
-        <header className="h-20 bg-base-100 border-b border-base-300 flex items-center justify-between px-8 z-10 shadow-sm">
+        <header className="h-20 bg-white border-b border-base-300 flex items-center justify-between px-8 z-10 shadow-sm">
           <div className="flex-1" />
           <div className="flex items-center gap-4">
             <ConnectButton showBalance={false} />

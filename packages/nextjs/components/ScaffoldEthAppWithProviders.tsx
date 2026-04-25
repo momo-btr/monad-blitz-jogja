@@ -14,7 +14,7 @@ import { wagmiConfig } from "~~/services/web3/wagmiConfig";
 
 const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
   return (
-    <div className="flex h-screen overflow-hidden bg-base-100 font-sans text-base-content">
+    <div className="flex h-screen overflow-hidden bg-white font-sans text-base-content">
       <Sidebar />
       <div className="flex flex-col flex-1 overflow-hidden">
         <Header />
