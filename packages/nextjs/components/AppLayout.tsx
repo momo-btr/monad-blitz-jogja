@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { HomeIcon, ShoppingBagIcon, BriefcaseIcon, ChartBarIcon } from "@heroicons/react/24/outline";
+import { BriefcaseIcon, ChartBarIcon, HomeIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const pathname = usePathname();
@@ -24,7 +24,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
             <h1 className="text-2xl font-bold text-primary tracking-tight">Terraforma</h1>
           </Link>
           <nav className="space-y-1.5">
-            {navItems.map((item) => {
+            {navItems.map(item => {
               const active = pathname?.startsWith(item.href);
               return (
                 <Link
@@ -36,9 +36,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
                       : "hover:bg-base-200 text-black/70 hover:text-black"
                   }`}
                 >
-                  <item.icon
-                    className={`w-5 h-5 ${active ? "text-black" : "text-black/50"}`}
-                  />
+                  <item.icon className={`w-5 h-5 ${active ? "text-black" : "text-black/50"}`} />
                   {item.name}
                 </Link>
               );
@@ -47,9 +45,12 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
         </div>
 
         <div className="pt-4 border-t border-base-300 mt-auto">
-          <button className="btn w-full btn-outline border-primary text-primary hover:bg-primary hover:text-black hover:border-primary transition-colors">
+          <Link
+            href="/list-property"
+            className="btn w-full btn-outline border-primary text-primary hover:bg-primary hover:text-black hover:border-primary transition-colors"
+          >
             List New Property
-          </button>
+          </Link>
         </div>
       </aside>
 
@@ -65,9 +66,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
 
         {/* Page Content */}
         <div className="flex-1 overflow-auto p-8">
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
+          <div className="max-w-7xl mx-auto">{children}</div>
         </div>
       </main>
     </div>

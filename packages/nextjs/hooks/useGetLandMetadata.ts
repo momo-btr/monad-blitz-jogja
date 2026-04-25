@@ -1,80 +1,71 @@
 import { useEffect, useState } from "react";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
-export const useGetLandMetadata = (tokenId: bigint) => {
-  const [metadata, setMetadata] = useState<any>(null);
-  const [geoJson, setGeoJson] = useState<any>(null);
-  const [isLoading, setIsLoading] = useState(false);
+export type LandPlot = {
+  id: bigint;
+  geoJSONHash: string;
+  locationProvince: string;
+  locationCity: string;
+  areaSqm: bigint;
+  NIB_NomorIdentitasBidang: string;
+  isVerified: boolean;
+};
 
-  // 1. Read URI from Monad Testnet Contract
-  const { data: tokenURI } = useScaffoldReadContract({
+export type IpfsMetadata = {
+  name?: string;
+  description?: string;
+  image?: string;
+  attributes?: Array<{ trait_type: string; value: string | number }>;
+  geojson?: unknown;
+};
+
+/**
+ * Reads on-chain land plot details and optionally fetches IPFS metadata.
+ * No mock fallback — returns undefined when data is genuinely absent.
+ */
+export const useGetLandMetadata = (tokenId: bigint) => {
+  const [ipfsMetadata, setIpfsMetadata] = useState<IpfsMetadata | null>(null);
+  const [geoJson, setGeoJson] = useState<unknown>(null);
+  const [isFetchingIpfs, setIsFetchingIpfs] = useState(false);
+
+  const { data: landPlot, isLoading: isLoadingPlot } = useScaffoldReadContract({
     contractName: "TerraformaLand",
-    functionName: "tokenURI",
+    functionName: "getLandPlotDetails",
     args: [tokenId],
+    query: { enabled: tokenId > 0n },
+  });
+
+  const { data: ownerAddress } = useScaffoldReadContract({
+    contractName: "TerraformaLand",
+    functionName: "ownerOf",
+    args: [tokenId],
+    query: { enabled: tokenId > 0n },
   });
 
   useEffect(() => {
-    const fetchMetadata = async () => {
-      setIsLoading(true);
-      try {
-        if (tokenURI) {
-          // Resolve IPFS URL
-          const res = await fetch(tokenURI.replace("ipfs://", "https://ipfs.io/ipfs/"));
-          const data = await res.json();
-          setMetadata(data);
+    const hash = landPlot?.geoJSONHash;
+    if (!hash?.startsWith("ipfs://")) return;
 
-          if (data.geojson) {
-            setGeoJson(typeof data.geojson === "string" ? JSON.parse(data.geojson) : data.geojson);
-          } else if (data.attributes?.geoJson) {
-            // Fallback for old mock format
-            setGeoJson(
-              typeof data.attributes.geoJson === "string"
-                ? JSON.parse(data.attributes.geoJson)
-                : data.attributes.geoJson,
-            );
-          }
-        } else {
-          // MOCK DATA: Fallback for MVP when contract is not yet deployed or URI is empty
-          const mockGeoJson = {
-            type: "Feature",
-            properties: { name: "Sumatra Palm Estate" },
-            geometry: {
-              type: "Polygon",
-              coordinates: [
-                [
-                  [104.7566, -3.105],
-                  [104.76, -3.105],
-                  [104.76, -3.102],
-                  [104.7566, -3.102],
-                  [104.7566, -3.105],
-                ],
-              ],
-            },
-          };
+    setIsFetchingIpfs(true);
+    const url = hash.replace("ipfs://", "https://ipfs.io/ipfs/");
 
-          setMetadata({
-            name: "Sumatra Palm Estate",
-            description: "Prime agricultural land in Sumatra, Indonesia.",
-            image: "https://placehold.co/600x400/2A9D8F/FFFFFF?text=Land+Image",
-            attributes: {
-              acreage: "120",
-              landUse: "Agricultural",
-              soilQuality: "High",
-              carbonOffset: "500t",
-              buildingPermit: "Yes",
-            },
-          });
-          setGeoJson(mockGeoJson);
+    fetch(url)
+      .then(r => r.json())
+      .then((data: IpfsMetadata) => {
+        setIpfsMetadata(data);
+        if (data.geojson) {
+          setGeoJson(typeof data.geojson === "string" ? JSON.parse(data.geojson) : data.geojson);
         }
-      } catch (e) {
-        console.error("Failed to parse metadata", e);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+      })
+      .catch(err => console.warn("[useGetLandMetadata] IPFS fetch failed:", err))
+      .finally(() => setIsFetchingIpfs(false));
+  }, [landPlot?.geoJSONHash]);
 
-    fetchMetadata();
-  }, [tokenURI]);
-
-  return { metadata, geoJson, isLoading };
+  return {
+    landPlot: landPlot as LandPlot | undefined,
+    ownerAddress: ownerAddress as `0x${string}` | undefined,
+    ipfsMetadata,
+    geoJson,
+    isLoading: isLoadingPlot || isFetchingIpfs,
+  };
 };
