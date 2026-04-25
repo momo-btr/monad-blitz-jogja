@@ -31,9 +31,7 @@ export const Sidebar = () => {
               key={item.href}
               href={item.href}
               className={`flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-colors ${
-                pathname === item.href
-                  ? "bg-primary text-black"
-                  : "text-black hover:bg-base-200 hover:text-black"
+                pathname === item.href ? "bg-primary text-black" : "text-black hover:bg-base-200 hover:text-black"
               }`}
             >
               {item.icon}
@@ -49,17 +47,6 @@ export const Sidebar = () => {
           <Link href="/list-property" className="btn btn-primary btn-sm w-full font-normal">
             List New Property
           </Link>
-        </div>
-
-        <div className="flex flex-col gap-2">
-          <button className="flex items-center gap-3 px-4 py-2 text-sm text-black hover:text-black">
-            <QuestionMarkCircleIcon className="w-5 h-5" />
-            Support
-          </button>
-          <button className="flex items-center gap-3 px-4 py-2 text-sm text-black hover:text-black">
-            <ArrowRightOnRectangleIcon className="w-5 h-5" />
-            Sign Out
-          </button>
         </div>
       </div>
     </div>
