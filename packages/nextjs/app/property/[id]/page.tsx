@@ -1,17 +1,17 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import Link from "next/link";
-import { MapExplorer } from "~~/components/MapExplorer";
-import { useGetLandMetadata } from "~~/hooks/useGetLandMetadata";
+import { useParams } from "next/navigation";
 import {
-  MapPinIcon,
-  DocumentArrowDownIcon,
-  ShieldCheckIcon,
   ArrowsRightLeftIcon,
-  GlobeAltIcon,
   CheckBadgeIcon,
+  DocumentArrowDownIcon,
+  GlobeAltIcon,
+  MapPinIcon,
+  ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
+import MapExplorer from "~~/components/DynamicMap";
+import { useGetLandMetadata } from "~~/hooks/useGetLandMetadata";
 
 export default function PropertyDetails() {
   const params = useParams();
@@ -21,9 +21,21 @@ export default function PropertyDetails() {
 
   // Mock data for elements not provided by the current metadata hook
   const provenanceHistory = [
-    { date: "Oct 24, 2023", action: "Yield Distribution", from: "Terraforma Escrow", to: "0x8f...3b1a", tx: "0xab12...def4" },
+    {
+      date: "Oct 24, 2023",
+      action: "Yield Distribution",
+      from: "Terraforma Escrow",
+      to: "0x8f...3b1a",
+      tx: "0xab12...def4",
+    },
     { date: "Sep 15, 2023", action: "Verification", from: "Oracle Network", to: "Smart Contract", tx: "0xbc34...bcd1" },
-    { date: "Sep 02, 2023", action: "Token Minting", from: "NullAddress", to: "Terraforma Deployer", tx: "0xcd56...efa2" },
+    {
+      date: "Sep 02, 2023",
+      action: "Token Minting",
+      from: "NullAddress",
+      to: "Terraforma Deployer",
+      tx: "0xcd56...efa2",
+    },
   ];
 
   const onChainAssets = [
@@ -54,8 +66,12 @@ export default function PropertyDetails() {
       {/* Breadcrumbs */}
       <div className="text-sm breadcrumbs text-base-content/60">
         <ul>
-          <li><Link href="/marketplace">Marketplace</Link></li>
-          <li><Link href="/marketplace?region=Sumatra">Sumatra Region</Link></li>
+          <li>
+            <Link href="/marketplace">Marketplace</Link>
+          </li>
+          <li>
+            <Link href="/marketplace?region=Sumatra">Sumatra Region</Link>
+          </li>
           <li className="font-semibold text-base-content">{metadata?.name || "Property Details"}</li>
         </ul>
       </div>
@@ -63,7 +79,6 @@ export default function PropertyDetails() {
       <div className="flex flex-col lg:flex-row gap-8">
         {/* Left Column - Main Content (70%) */}
         <div className="lg:w-2/3 space-y-8">
-
           {/* Header & Hero Image */}
           <div className="space-y-4">
             <div className="flex justify-between items-start">
@@ -100,7 +115,8 @@ export default function PropertyDetails() {
           <div className="bg-base-100 p-8 rounded-2xl shadow-sm border border-base-300">
             <h2 className="text-xl font-bold text-base-content mb-4">Property Overview</h2>
             <p className="text-base-content/80 leading-relaxed">
-              {metadata?.description || "Prime agricultural land situated in the heart of South Sumatra. This parcel boasts highly fertile soil historically yielding above-average palm and rubber outputs. The estate comes fully verified on-chain, carrying a certified carbon offset rating, making it an ideal asset for eco-conscious institutional investors seeking steady yield."}
+              {metadata?.description ||
+                "Prime agricultural land situated in the heart of South Sumatra. This parcel boasts highly fertile soil historically yielding above-average palm and rubber outputs. The estate comes fully verified on-chain, carrying a certified carbon offset rating, making it an ideal asset for eco-conscious institutional investors seeking steady yield."}
             </p>
           </div>
 
@@ -110,7 +126,9 @@ export default function PropertyDetails() {
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {techSpecs.map((spec, idx) => (
                 <div key={idx} className="bg-base-200/50 p-4 rounded-xl border border-base-200">
-                  <p className="text-xs font-semibold text-base-content/50 uppercase tracking-wider mb-1">{spec.label}</p>
+                  <p className="text-xs font-semibold text-base-content/50 uppercase tracking-wider mb-1">
+                    {spec.label}
+                  </p>
                   <p className="font-medium text-base-content">{spec.value}</p>
                 </div>
               ))}
@@ -158,13 +176,20 @@ export default function PropertyDetails() {
                 </thead>
                 <tbody>
                   {provenanceHistory.map((log, idx) => (
-                    <tr key={idx} className="hover:bg-base-200/30 transition-colors border-b border-base-200 last:border-0">
+                    <tr
+                      key={idx}
+                      className="hover:bg-base-200/30 transition-colors border-b border-base-200 last:border-0"
+                    >
                       <td className="text-sm text-base-content/70">{log.date}</td>
                       <td className="font-medium text-base-content">{log.action}</td>
                       <td className="text-sm text-base-content/70">{log.from}</td>
                       <td className="text-sm text-base-content/70">{log.to}</td>
                       <td>
-                        <Link href={`https://explorer.monad-testnet.io/tx/${log.tx}`} target="_blank" className="text-xs text-primary hover:underline font-mono bg-primary/5 px-2 py-1 rounded">
+                        <Link
+                          href={`https://explorer.monad-testnet.io/tx/${log.tx}`}
+                          target="_blank"
+                          className="text-xs text-primary hover:underline font-mono bg-primary/5 px-2 py-1 rounded"
+                        >
                           {log.tx}
                         </Link>
                       </td>
@@ -174,12 +199,10 @@ export default function PropertyDetails() {
               </table>
             </div>
           </div>
-
         </div>
 
         {/* Right Column - Sidebar (30%) */}
         <div className="lg:w-1/3 space-y-6">
-
           {/* Transaction Card (Sticky) */}
           <div className="sticky top-24 space-y-6">
             <div className="bg-base-100 p-6 rounded-2xl shadow-lg border border-base-300">
@@ -225,7 +248,8 @@ export default function PropertyDetails() {
                   <h3 className="text-lg font-bold text-white">Institutional Protection</h3>
                 </div>
                 <p className="text-sm text-slate-300 leading-relaxed mb-4">
-                  This asset is legally wrapped in an SPV compliant with Indonesian agrarian law. Smart contracts are secured via Safe multi-sig and audited by top-tier firms.
+                  This asset is legally wrapped in an SPV compliant with Indonesian agrarian law. Smart contracts are
+                  secured via Safe multi-sig and audited by top-tier firms.
                 </p>
                 <Link href="#" className="text-primary text-sm font-medium hover:underline flex items-center gap-1">
                   View Legal Structure <ArrowsRightLeftIcon className="w-3 h-3" />
@@ -238,21 +262,25 @@ export default function PropertyDetails() {
               <h3 className="text-lg font-bold text-base-content mb-4">On-Chain Assets</h3>
               <div className="space-y-3">
                 {onChainAssets.map((doc, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors cursor-pointer group">
+                  <div
+                    key={idx}
+                    className="flex items-center justify-between p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors cursor-pointer group"
+                  >
                     <div className="flex items-center gap-3">
                       <div className="p-2 bg-base-100 rounded-lg shadow-sm text-primary group-hover:text-primary-content group-hover:bg-primary transition-colors">
                         <DocumentArrowDownIcon className="w-5 h-5" />
                       </div>
                       <div>
                         <p className="text-sm font-semibold text-base-content">{doc.name}</p>
-                        <p className="text-xs text-base-content/50">{doc.type} • {doc.size}</p>
+                        <p className="text-xs text-base-content/50">
+                          {doc.type} • {doc.size}
+                        </p>
                       </div>
                     </div>
                   </div>
                 ))}
               </div>
             </div>
-
           </div>
         </div>
       </div>

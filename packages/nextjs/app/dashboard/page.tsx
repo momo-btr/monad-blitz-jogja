@@ -1,207 +1,222 @@
-import { MapExplorer } from "~~/components/MapExplorer";
-import {
-  ArrowTrendingUpIcon, ArrowTrendingDownIcon,
-  BanknotesIcon,
-  DocumentCheckIcon,
-  CubeIcon,
-  BuildingOfficeIcon,
-  GlobeEuropeAfricaIcon,
-} from "@heroicons/react/24/outline";
+"use client";
+
+import { ArrowDownTrayIcon, BuildingOffice2Icon, MapIcon, PlusIcon } from "@heroicons/react/24/outline";
+import DynamicMap from "~~/components/DynamicMap";
+
+// Mock GeoJSON for the dashboard map
+const mockGeoJson = {
+  type: "FeatureCollection",
+  features: [
+    {
+      type: "Feature",
+      properties: {},
+      geometry: {
+        type: "Polygon",
+        coordinates: [
+          [
+            [113.8, -0.7],
+            [114.0, -0.7],
+            [114.0, -0.9],
+            [113.8, -0.9],
+            [113.8, -0.7],
+          ],
+        ],
+      },
+    },
+  ],
+};
+
+const transactions = [
+  {
+    name: "Emerald Valley A12",
+    location: "California, USA",
+    id: "0x42...88a",
+    type: "Agricultural",
+    value: "$125,000",
+    icon: <MapIcon className="w-6 h-6 text-primary" />,
+  },
+  {
+    name: "Pine Ridge Reserve",
+    location: "Oregon, USA",
+    id: "0x91...f2c",
+    type: "Conservation",
+    value: "$450,000",
+    // Heroicons doesn't have a tree, using a generic shape/icon
+    icon: (
+      <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-8 7 8M5 19h14" />
+      </svg>
+    ),
+  },
+  {
+    name: "Metropolis Hub X",
+    location: "Austin, TX",
+    id: "0x15...e5e",
+    type: "Commercial",
+    value: "$890,000",
+    icon: <BuildingOffice2Icon className="w-6 h-6 text-primary" />,
+  },
+];
 
 export default function Dashboard() {
-  // Mock GeoJSON for the dashboard map overview (multiple locations)
-  const mockGeoJson = {
-    type: "FeatureCollection",
-    features: [
-      {
-        type: "Feature",
-        properties: { name: "Sumatra Palm Estate" },
-        geometry: {
-          type: "Polygon",
-          coordinates: [
-            [
-              [104.7566, -3.105],
-              [104.7600, -3.105],
-              [104.7600, -3.102],
-              [104.7566, -3.102],
-              [104.7566, -3.105],
-            ],
-          ],
-        },
-      },
-      {
-        type: "Feature",
-        properties: { name: "Java Teak Forest" },
-        geometry: {
-          type: "Polygon",
-          coordinates: [
-            [
-              [110.3705, -7.7956],
-              [110.3755, -7.7956],
-              [110.3755, -7.7906],
-              [110.3705, -7.7906],
-              [110.3705, -7.7956],
-            ],
-          ],
-        },
-      },
-    ],
-  };
-
-  const metrics = [
-    { title: "Total Portfolio Value", value: "1,250 MONAD", change: "+5.2%", isPositive: true },
-    { title: "Active Assets", value: "14", change: "+2", isPositive: true },
-    { title: "Est. Annual Yield", value: "8.4%", change: "+0.3%", isPositive: true },
-    { title: "Pending Contracts", value: "3", change: "Action needed", isPositive: false, isNeutral: true },
-  ];
-
-  const transactions = [
-    { id: "TX-901", asset: "Sumatra Palm Estate", type: "Acquisition", amount: "450 MONAD", date: "Today, 10:42 AM", status: "Completed", icon: GlobeEuropeAfricaIcon },
-    { id: "TX-902", asset: "Bali Eco-Tourism", type: "Yield Distribution", amount: "12.5 MONAD", date: "Yesterday", status: "Completed", icon: BuildingOfficeIcon },
-    { id: "TX-903", asset: "Java Teak Forest", type: "Escrow Deposit", amount: "100 MONAD", date: "Oct 14, 2023", status: "Pending", icon: CubeIcon },
-  ];
-
-  const allocations = [
-    { label: "Agricultural", value: 45, color: "bg-primary" },
-    { label: "Commercial", value: 30, color: "bg-blue-500" },
-    { label: "Conservation", value: 25, color: "bg-amber-400" },
-  ];
-
   return (
-    <div className="space-y-8 animate-fade-in">
-      {/* Header */}
-      <div>
-        <h1 className="text-3xl font-bold text-base-content mb-2">Investment Overview</h1>
-        <p className="text-base-content/70">Welcome back. Here is the latest summary of your tokenized real estate assets.</p>
+    <div className="flex flex-col gap-8 max-w-7xl mx-auto">
+      {/* Header Section */}
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h1 className="text-3xl font-bold text-base-content mb-1">Investment Overview</h1>
+          <p className="text-base-content/60">Welcome back. Your portfolio grew by 4.2% this month.</p>
+        </div>
+        <div className="flex items-center gap-3">
+          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content bg-surface font-normal">
+            <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
+            Reports
+          </button>
+          <button className="btn btn-primary font-normal text-primary-content">
+            <PlusIcon className="w-4 h-4 mr-1" />
+            Buy Land
+          </button>
+        </div>
       </div>
 
-      {/* Metrics Row */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {metrics.map((metric, idx) => (
-          <div key={idx} className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-300 flex flex-col hover:shadow-md transition-shadow">
-            <span className="text-sm font-medium text-base-content/60 mb-2">{metric.title}</span>
-            <span className="text-3xl font-bold text-base-content mb-3">{metric.value}</span>
-            <div className={`flex items-center text-sm font-medium ${metric.isNeutral ? 'text-warning' : metric.isPositive ? 'text-success' : 'text-error'}`}>
-              {!metric.isNeutral && (
-                metric.isPositive ? <ArrowTrendingUpIcon className="w-4 h-4 mr-1" /> : <ArrowTrendingDownIcon className="w-4 h-4 mr-1" />
-              )}
-              {metric.change}
+      {/* Top Grid: KPI & Map */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* KPI Card */}
+        <div className="bg-surface rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
+          <div>
+            <div className="flex items-center justify-between mb-4">
+              <span className="text-sm font-semibold text-base-content/50 uppercase tracking-wider">
+                Total Portfolio Value
+              </span>
+              <span className="bg-[#E6F4F1] text-primary px-3 py-1 rounded-full text-sm font-medium">+12.5%</span>
             </div>
-          </div>
-        ))}
-      </div>
-
-      {/* Main Grid */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-        {/* Left Column (Spans 2) */}
-        <div className="lg:col-span-2 space-y-8">
-
-          {/* Interactive Explorer */}
-          <div className="bg-base-100 rounded-xl shadow-sm border border-base-300 overflow-hidden flex flex-col">
-            <div className="p-5 border-b border-base-200 flex justify-between items-center">
-              <h2 className="text-lg font-bold text-base-content">Interactive Explorer</h2>
-              <button className="btn btn-sm btn-ghost text-primary">View Full Map</button>
-            </div>
-            <div className="p-0">
-              <MapExplorer geoJsonData={mockGeoJson} />
-            </div>
+            <h2 className="text-5xl font-bold text-base-content mb-4 tracking-tight">$2,485,900</h2>
+            <p className="text-base-content/70 text-sm">
+              42 On-Chain Parcels
+              <br />
+              Verified
+            </p>
           </div>
 
-          {/* Recent Transactions */}
-          <div className="bg-base-100 rounded-xl shadow-sm border border-base-300 overflow-hidden">
-            <div className="p-5 border-b border-base-200">
-              <h2 className="text-lg font-bold text-base-content">Recent On-Chain Activity</h2>
+          <div className="flex items-center gap-8 mt-12 pt-6 border-t border-base-200">
+            <div>
+              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Liquidity</p>
+              <p className="text-lg font-medium text-primary">$142,000</p>
             </div>
-            <div className="overflow-x-auto">
-              <table className="table w-full">
-                <thead className="bg-base-200/50 text-base-content/70">
-                  <tr>
-                    <th>Asset</th>
-                    <th>Type</th>
-                    <th>Amount</th>
-                    <th>Date</th>
-                    <th>Status</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {transactions.map((tx) => (
-                    <tr key={tx.id} className="hover:bg-base-200/30 transition-colors border-b border-base-200 last:border-0">
-                      <td>
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-lg bg-base-200 flex items-center justify-center text-primary">
-                            <tx.icon className="w-6 h-6" />
-                          </div>
-                          <div>
-                            <div className="font-semibold text-base-content">{tx.asset}</div>
-                            <div className="text-xs text-base-content/50">{tx.id}</div>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="text-base-content/80">{tx.type}</td>
-                      <td className="font-medium text-base-content">{tx.amount}</td>
-                      <td className="text-sm text-base-content/70">{tx.date}</td>
-                      <td>
-                        <span className={`badge badge-sm border-none ${tx.status === 'Completed' ? 'bg-success/20 text-success' : 'bg-warning/20 text-warning'}`}>
-                          {tx.status}
-                        </span>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </table>
+            <div>
+              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Yield (APY)</p>
+              <p className="text-lg font-medium text-primary">8.2%</p>
             </div>
           </div>
-
         </div>
 
-        {/* Right Column (Spans 1) */}
-        <div className="space-y-8">
+        {/* Map Explorer */}
+        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
+          <div className="absolute top-4 left-4 z-[400] bg-surface/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
+            <span className="text-sm font-medium text-base-content">Interactive Explorer: Central Valley</span>
+          </div>
+          {/* Controls Overlay */}
+          <div className="absolute bottom-4 right-4 z-[400] flex gap-2">
+            <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
+              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
+                />
+              </svg>
+            </button>
+            <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
+              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+                />
+              </svg>
+            </button>
+          </div>
+          {/* Real Leaflet Map component */}
+          <div className="w-full h-full">
+            <DynamicMap geoJsonData={mockGeoJson} center={[-0.8, 113.9]} zoom={10} interactive={true} />
+          </div>
+        </div>
+      </div>
 
-          {/* Asset Allocation */}
-          <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-300">
-            <h2 className="text-lg font-bold text-base-content mb-6">Asset Allocation</h2>
+      {/* Bottom Grid: Transactions & Allocations */}
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        {/* Recent Transactions */}
+        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden">
+          <div className="p-6 border-b border-base-200 flex justify-between items-center">
+            <h3 className="font-semibold text-base-content">Recent Land Transactions</h3>
+            <button className="text-sm text-primary font-medium hover:underline">View All</button>
+          </div>
+          <div className="overflow-x-auto">
+            <table className="table w-full text-sm">
+              <thead className="bg-base-200 text-base-content/60 font-medium">
+                <tr>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Asset</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">ID</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Type</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {transactions.map((tx, idx) => (
+                  <tr key={idx} className="border-b border-base-200 last:border-0 hover:bg-base-50 transition-colors">
+                    <td className="py-4">
+                      <div className="flex items-center gap-3">
+                        <div className="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center">
+                          {tx.icon}
+                        </div>
+                        <div>
+                          <p className="font-medium text-base-content">{tx.name}</p>
+                          <p className="text-xs text-base-content/50">{tx.location}</p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="py-4 font-mono text-base-content/70">{tx.id}</td>
+                    <td className="py-4 text-base-content/70">{tx.type}</td>
+                    <td className="py-4 font-medium text-base-content">{tx.value}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </div>
+        </div>
 
-            {/* Progress Bar Chart */}
-            <div className="w-full h-4 rounded-full flex overflow-hidden mb-6">
-              {allocations.map((alloc, idx) => (
-                <div key={idx} className={`h-full ${alloc.color}`} style={{ width: `${alloc.value}%` }}></div>
-              ))}
-            </div>
-
-            {/* Legend */}
-            <div className="space-y-4">
-              {allocations.map((alloc, idx) => (
-                <div key={idx} className="flex items-center justify-between">
-                  <div className="flex items-center gap-3">
-                    <div className={`w-3 h-3 rounded-full ${alloc.color}`}></div>
-                    <span className="text-sm font-medium text-base-content/80">{alloc.label}</span>
+        {/* Asset Allocation */}
+        <div className="flex flex-col gap-6">
+          <div className="bg-surface rounded-2xl p-6 border border-base-300 shadow-sm flex-1">
+            <h3 className="font-semibold text-base-content mb-6">Asset Allocation</h3>
+            <div className="flex flex-col gap-5">
+              {[
+                { label: "Agricultural", value: "45%", width: "45%", color: "bg-primary" },
+                { label: "Conservation", value: "30%", width: "30%", color: "bg-primary/40" },
+                { label: "Commercial", value: "25%", width: "25%", color: "bg-secondary" },
+              ].map((item, idx) => (
+                <div key={idx}>
+                  <div className="flex justify-between text-sm mb-2">
+                    <span className="text-base-content/80">{item.label}</span>
+                    <span className="font-medium text-base-content">{item.value}</span>
                   </div>
-                  <span className="text-sm font-bold text-base-content">{alloc.value}%</span>
+                  <div className="w-full h-2 bg-base-200 rounded-full overflow-hidden">
+                    <div className={`h-full ${item.color} rounded-full`} style={{ width: item.width }}></div>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Actionable Insight Card */}
-          <div className="bg-gradient-to-br from-primary to-[#207a6f] p-6 rounded-xl shadow-sm text-primary-content relative overflow-hidden">
-            <div className="relative z-10">
-              <div className="flex items-center gap-2 mb-3">
-                <DocumentCheckIcon className="w-5 h-5 text-accent" />
-                <span className="text-sm font-semibold text-primary-content/90 tracking-wide uppercase">Insight</span>
-              </div>
-              <h3 className="text-xl font-bold mb-2">High Yield Opportunity</h3>
-              <p className="text-primary-content/80 text-sm mb-6 leading-relaxed">
-                Based on your portfolio's heavy agricultural weighting, adding commercial land in the Java region could optimize your yield curve by an estimated 1.2% APY.
-              </p>
-              <button className="btn btn-sm bg-white text-primary hover:bg-base-200 border-none w-full">
-                Explore Commercial Assets
-              </button>
-            </div>
-            {/* Decorative background element */}
-            <BanknotesIcon className="w-48 h-48 absolute -bottom-10 -right-10 text-white opacity-10 pointer-events-none" />
+          <div className="bg-[#E6F4F1] rounded-2xl p-6 border border-[#BDE3DB]">
+            <p className="text-sm text-[#207a6f] leading-relaxed">
+              Insight: Commercial land in Austin is trending upwards. Consider rebalancing your conservation parcels for
+              higher liquidity.
+            </p>
           </div>
-
         </div>
       </div>
     </div>

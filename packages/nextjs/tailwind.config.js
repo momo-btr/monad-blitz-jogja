@@ -1,10 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./app/**/*.{js,ts,jsx,tsx}",
-    "./components/**/*.{js,ts,jsx,tsx}",
-    "./utils/**/*.{js,ts,jsx,tsx}",
-  ],
+  content: ["./app/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}", "./utils/**/*.{js,ts,jsx,tsx}"],
   theme: {
     extend: {
       colors: {
@@ -12,6 +8,7 @@ module.exports = {
         "primary-content": "#FFFFFF",
         base: "#F9FAFB", // Light Fintech Background
         surface: "#FFFFFF", // Card Backgrounds
+        "base-content": "#111827", // Primary Text
       },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",

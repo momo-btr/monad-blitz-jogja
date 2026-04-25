@@ -1,69 +1,85 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import dynamic from "next/dynamic";
+import L from "leaflet";
 import "leaflet/dist/leaflet.css";
+import { GeoJSON, MapContainer, TileLayer, useMap } from "react-leaflet";
 
-// Dynamic imports to prevent SSR "window is not defined" errors
-const MapContainer = dynamic(
-  () => import("react-leaflet").then((mod) => mod.MapContainer),
-  { ssr: false }
-);
-const TileLayer = dynamic(
-  () => import("react-leaflet").then((mod) => mod.TileLayer),
-  { ssr: false }
-);
-const GeoJSON = dynamic(
-  () => import("react-leaflet").then((mod) => mod.GeoJSON),
-  { ssr: false }
-);
+// Fix Leaflet SSR and icon issues
+if (typeof window !== "undefined") {
+  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+  // @ts-ignore
+  delete L.Icon.Default.prototype._getIconUrl;
+  L.Icon.Default.mergeOptions({
+    iconRetinaUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+    iconUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+    shadowUrl: "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+  });
+}
 
 interface MapExplorerProps {
   geoJsonData?: any;
+  center?: [number, number];
+  zoom?: number;
+  interactive?: boolean;
 }
 
-export const MapExplorer = ({ geoJsonData }: MapExplorerProps) => {
+// Helper to update map center dynamically
+const MapUpdater = ({ center, zoom }: { center: [number, number]; zoom: number }) => {
+  const map = useMap();
+  useEffect(() => {
+    map.setView(center, zoom);
+  }, [center, zoom, map]);
+  return null;
+};
+
+export default function MapExplorer({
+  geoJsonData,
+  center = [-0.7893, 113.9213], // Indonesia default
+  zoom = 5,
+  interactive = true,
+}: MapExplorerProps) {
   const [mounted, setMounted] = useState(false);
-  // Default center focused on Indonesia
-  const defaultCenter: [number, number] = [-0.7893, 113.9213];
 
   useEffect(() => {
-    // A trick to ensure leaflet assets are loaded properly on client side
-    // Leaflet's default icons can sometimes be problematic in Next.js without this,
-    // but for GeoJSON shapes, it's generally fine.
     setMounted(true);
   }, []);
 
   if (!mounted) {
     return (
-      <div className="h-[400px] w-full rounded-xl bg-base-200 animate-pulse border border-base-300 z-0"></div>
+      <div className="w-full h-full bg-base-300 animate-pulse flex items-center justify-center">
+        <span className="text-base-content/50">Loading Map...</span>
+      </div>
     );
   }
 
   return (
-    <div className="h-[400px] w-full rounded-xl overflow-hidden border border-base-300 shadow-sm z-0 relative isolate">
+    <div className="w-full h-full relative z-0">
       <MapContainer
-        center={defaultCenter}
-        zoom={5}
-        className="h-full w-full z-0"
-        scrollWheelZoom={false}
+        center={center}
+        zoom={zoom}
+        scrollWheelZoom={interactive}
+        zoomControl={interactive}
+        dragging={interactive}
+        className="w-full h-full"
       >
         <TileLayer
-          url="https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png"
-          attribution='&copy; <a href="https://carto.com/">CARTO</a>'
+          attribution='&copy; <a href="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer">Esri</a>'
+          url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
         />
         {geoJsonData && (
           <GeoJSON
             data={geoJsonData}
-            style={() => ({
+            pathOptions={{
               color: "#2A9D8F",
-              weight: 2,
               fillColor: "#2A9D8F",
-              fillOpacity: 0.4,
-            })}
+              fillOpacity: 0.5,
+              weight: 3,
+            }}
           />
         )}
+        <MapUpdater center={center} zoom={zoom} />
       </MapContainer>
     </div>
   );
-};
+}
