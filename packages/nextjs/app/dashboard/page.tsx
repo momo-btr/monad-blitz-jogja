@@ -1,215 +1,217 @@
 "use client";
 
-import { ArrowDownTrayIcon, BuildingOffice2Icon, MapIcon, PlusIcon } from "@heroicons/react/24/outline";
+import Link from "next/link";
+import { Address } from "@scaffold-ui/components";
+import { useAccount } from "wagmi";
+import { ArrowDownTrayIcon, ChartBarIcon, PlusIcon } from "@heroicons/react/24/outline";
 import { DynamicMap } from "~~/components/DynamicMap";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
+import { useLandRegistry } from "~~/hooks/useLandRegistry";
 
-// Mock GeoJSON for the dashboard map
-const mockGeoJson = {
+// Static GeoJSON centred on Indonesia — used as the map explorer widget default.
+// lng 118, lat -2.5 (geographic centre of the archipelago).
+const mapGeoJson = {
   type: "Polygon",
   coordinates: [
     [
-      [113.8, -0.7],
-      [114.0, -0.7],
-      [114.0, -0.9],
-      [113.8, -0.9],
-      [113.8, -0.7],
+      [113.0, -5.0],
+      [123.0, -5.0],
+      [123.0, -0.0],
+      [113.0, -0.0],
+      [113.0, -5.0],
     ],
   ],
 };
 
-const transactions = [
-  {
-    name: "Emerald Valley A12",
-    location: "California, USA",
-    id: "0x42...88a",
-    type: "Agricultural",
-    value: "$125,000",
-    icon: <MapIcon className="w-6 h-6 text-primary" />,
-  },
-  {
-    name: "Pine Ridge Reserve",
-    location: "Oregon, USA",
-    id: "0x91...f2c",
-    type: "Conservation",
-    value: "$450,000",
-    // Heroicons doesn't have a tree, using a generic shape/icon
-    icon: (
-      <svg className="w-6 h-6 text-primary" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 15l7-8 7 8M5 19h14" />
-      </svg>
-    ),
-  },
-  {
-    name: "Metropolis Hub X",
-    location: "Austin, TX",
-    id: "0x15...e5e",
-    type: "Commercial",
-    value: "$890,000",
-    icon: <BuildingOffice2Icon className="w-6 h-6 text-primary" />,
-  },
-];
-
 export default function Dashboard() {
+  const { address } = useAccount();
+  const { lands, isLoading, total } = useLandRegistry();
+
+  // Check whether the connected wallet is a registry admin
+  const { data: isAdmin } = useScaffoldReadContract({
+    contractName: "TerraformaLand",
+    functionName: "admins",
+    args: [address as `0x${string}`],
+    query: { enabled: !!address },
+  });
+
+  // Count parcels owned by the connected wallet (based on mint events)
+  const myLands = address ? lands.filter(l => l.owner.toLowerCase() === address.toLowerCase()) : [];
+
+  // Show only the 5 most-recent mints in the table
+  const recentMints = lands.slice(0, 5);
+
   return (
     <div className="flex flex-col gap-8 max-w-7xl mx-auto">
-      {/* Header Section */}
+      {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-base-content mb-1">Investment Overview</h1>
-          <p className="text-base-content/60">Welcome back. Your portfolio grew by 4.2% this month.</p>
+          <h1 className="text-3xl font-bold text-base-content mb-1">Land Registry Dashboard</h1>
+          <p className="text-base-content/60">
+            {address
+              ? `${isAdmin ? "🔑 Admin · " : ""}Viewing Monad Testnet land registry.`
+              : "Connect your wallet to interact with the registry."}
+          </p>
         </div>
+
         <div className="flex items-center gap-3">
-          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content bg-base-100 font-normal">
-            <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
+          {/* Reports — placeholder action */}
+          <button className="btn btn-outline border-base-300 hover:bg-base-200 bg-base-100 font-normal">
+            <ChartBarIcon className="w-4 h-4 mr-1" />
             Reports
           </button>
-          <button className="btn btn-primary font-normal text-primary-content">
+
+          {/* Buy Land — always visible, links to the mint / list-property page */}
+          <Link href="/list-property" className="btn btn-primary font-normal text-primary-content">
             <PlusIcon className="w-4 h-4 mr-1" />
             Buy Land
-          </button>
+          </Link>
         </div>
       </div>
 
-      {/* Top Grid: KPI & Map */}
+      {/* ── KPI + Map ────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* KPI Card */}
+        {/* KPI card */}
         <div className="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-base-content/50 uppercase tracking-wider">
-                Total Portfolio Value
+                Total Parcels Registered
               </span>
-              <span className="bg-[#E6F4F1] text-primary px-3 py-1 rounded-full text-sm font-medium">+12.5%</span>
             </div>
-            <h2 className="text-5xl font-bold text-base-content mb-4 tracking-tight">$2,485,900</h2>
+
+            {isLoading ? (
+              <div className="h-14 flex items-center">
+                <span className="loading loading-dots loading-md text-primary" />
+              </div>
+            ) : (
+              <h2 className="text-5xl font-bold text-base-content mb-4 tracking-tight">{total}</h2>
+            )}
+
             <p className="text-base-content/70 text-sm">
-              42 On-Chain Parcels
+              On-chain land certificates
               <br />
-              Verified
+              on Monad Testnet
             </p>
           </div>
 
           <div className="flex items-center gap-8 mt-12 pt-6 border-t border-base-200">
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Liquidity</p>
-              <p className="text-lg font-medium text-primary">$142,000</p>
+              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">My Parcels</p>
+              {isLoading ? (
+                <div className="h-5 bg-base-200 rounded w-6 animate-pulse" />
+              ) : (
+                <p className="text-lg font-medium text-primary">{myLands.length}</p>
+              )}
             </div>
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Yield (APY)</p>
-              <p className="text-lg font-medium text-primary">8.2%</p>
+              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Network</p>
+              <p className="text-lg font-medium text-primary">Monad Testnet</p>
             </div>
           </div>
         </div>
 
-        {/* Map Explorer */}
+        {/* Map explorer */}
         <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
           <div className="absolute top-4 left-4 z-[400] bg-base-100/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
-            <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-            <span className="text-sm font-medium text-base-content">Interactive Explorer: Central Valley</span>
+            <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
+            <span className="text-sm font-medium text-base-content">Map Explorer · Indonesia</span>
           </div>
-          {/* Controls Overlay */}
-          <div className="absolute bottom-4 right-4 z-[400] flex gap-2">
-            <button className="w-10 h-10 bg-base-100 rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
-              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"
-                />
-              </svg>
-            </button>
-            <button className="w-10 h-10 bg-base-100 rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
-              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
-                />
-              </svg>
-            </button>
-          </div>
-          {/* Real Leaflet Map component */}
           <div className="w-full h-full">
-            <DynamicMap geojson={mockGeoJson} className="h-full" />
+            <DynamicMap geojson={mapGeoJson} className="h-full" />
           </div>
         </div>
       </div>
 
-      {/* Bottom Grid: Transactions & Allocations */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        {/* Recent Transactions */}
-        <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
-          <div className="p-6 border-b border-base-200 flex justify-between items-center">
-            <h3 className="font-semibold text-base-content">Recent Land Transactions</h3>
-            <button className="text-sm text-primary font-medium hover:underline">View All</button>
+      {/* ── Recent Land Registrations ─────────────────────────────────────────── */}
+      <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
+        <div className="p-6 border-b border-base-200 flex justify-between items-center">
+          <h3 className="font-semibold text-base-content">Recent Land Registrations</h3>
+          <Link href="/marketplace" className="text-sm text-primary font-medium hover:underline">
+            View All
+          </Link>
+        </div>
+
+        {isLoading ? (
+          <div className="flex items-center justify-center h-32">
+            <span className="loading loading-spinner text-primary" />
           </div>
+        ) : recentMints.length === 0 ? (
+          <div className="flex items-center justify-center h-32 text-base-content/50 text-sm">
+            No land certificates minted yet.
+          </div>
+        ) : (
           <div className="overflow-x-auto">
             <table className="table w-full text-sm">
               <thead className="bg-base-200 text-base-content/60 font-medium">
                 <tr>
-                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Asset</th>
-                  <th className="py-4 font-normal uppercase tracking-wider text-xs">ID</th>
-                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Type</th>
-                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Value</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Token ID</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">NIB</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Owner</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Block</th>
+                  <th className="py-4 font-normal uppercase tracking-wider text-xs">Tx</th>
                 </tr>
               </thead>
               <tbody>
-                {transactions.map((tx, idx) => (
-                  <tr key={idx} className="border-b border-base-200 last:border-0 hover:bg-base-50 transition-colors">
+                {recentMints.map(land => (
+                  <tr
+                    key={land.tokenId.toString()}
+                    className="border-b border-base-200 last:border-0 hover:bg-base-50 transition-colors"
+                  >
                     <td className="py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-10 h-10 rounded-lg bg-[#E6F4F1] flex items-center justify-center">
-                          {tx.icon}
-                        </div>
-                        <div>
-                          <p className="font-medium text-base-content">{tx.name}</p>
-                          <p className="text-xs text-base-content/50">{tx.location}</p>
-                        </div>
-                      </div>
+                      <Link
+                        href={`/property/${land.tokenId.toString()}`}
+                        className="font-mono font-bold text-primary hover:underline"
+                      >
+                        #{land.tokenId.toString()}
+                      </Link>
                     </td>
-                    <td className="py-4 font-mono text-base-content/70">{tx.id}</td>
-                    <td className="py-4 text-base-content/70">{tx.type}</td>
-                    <td className="py-4 font-medium text-base-content">{tx.value}</td>
+
+                    <td className="py-4 font-mono text-xs text-base-content/80">{land.nib || "—"}</td>
+
+                    <td className="py-4">
+                      <Address address={land.owner} />
+                    </td>
+
+                    <td className="py-4 font-mono text-base-content/60 text-xs">{land.blockNumber.toString()}</td>
+
+                    <td className="py-4">
+                      <a
+                        href={`https://testnet.monadexplorer.com/tx/${land.transactionHash}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-xs text-primary hover:underline font-mono"
+                      >
+                        {land.transactionHash.slice(0, 10)}…
+                      </a>
+                    </td>
                   </tr>
                 ))}
               </tbody>
             </table>
           </div>
-        </div>
-
-        {/* Asset Allocation */}
-        <div className="flex flex-col gap-6">
-          <div className="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-sm flex-1">
-            <h3 className="font-semibold text-base-content mb-6">Asset Allocation</h3>
-            <div className="flex flex-col gap-5">
-              {[
-                { label: "Agricultural", value: "45%", width: "45%", color: "bg-primary" },
-                { label: "Conservation", value: "30%", width: "30%", color: "bg-primary/40" },
-                { label: "Commercial", value: "25%", width: "25%", color: "bg-secondary" },
-              ].map((item, idx) => (
-                <div key={idx}>
-                  <div className="flex justify-between text-sm mb-2">
-                    <span className="text-base-content/80">{item.label}</span>
-                    <span className="font-medium text-base-content">{item.value}</span>
-                  </div>
-                  <div className="w-full h-2 bg-base-200 rounded-full overflow-hidden">
-                    <div className={`h-full ${item.color} rounded-full`} style={{ width: item.width }}></div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-[#E6F4F1] rounded-2xl p-6 border border-[#BDE3DB]">
-            <p className="text-sm text-[#207a6f] leading-relaxed">
-              Insight: Commercial land in Austin is trending upwards. Consider rebalancing your conservation parcels for
-              higher liquidity.
-            </p>
-          </div>
-        </div>
+        )}
       </div>
+
+      {/* ── Export strip (admin only) ─────────────────────────────────────────── */}
+      {isAdmin && (
+        <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 flex items-center justify-between">
+          <div>
+            <p className="font-semibold text-base-content">Admin Tools</p>
+            <p className="text-sm text-base-content/60 mt-0.5">Export registry data or mint new certificates.</p>
+          </div>
+          <div className="flex gap-3">
+            <button className="btn btn-outline border-base-300 hover:bg-base-200 bg-base-100 font-normal btn-sm">
+              <ArrowDownTrayIcon className="w-4 h-4 mr-1" />
+              Export CSV
+            </button>
+            <Link href="/list-property" className="btn btn-primary btn-sm font-normal text-primary-content">
+              <PlusIcon className="w-4 h-4 mr-1" />
+              Mint Certificate
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

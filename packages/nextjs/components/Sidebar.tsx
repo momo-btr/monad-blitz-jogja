@@ -2,14 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import {
-  ArrowRightOnRectangleIcon,
-  BriefcaseIcon,
-  ChartBarSquareIcon,
-  HomeIcon,
-  QuestionMarkCircleIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/24/outline";
+import { BriefcaseIcon, ChartBarSquareIcon, HomeIcon, ShoppingBagIcon } from "@heroicons/react/24/outline";
 
 export const Sidebar = () => {
   const pathname = usePathname();
@@ -51,7 +44,9 @@ export const Sidebar = () => {
       <div className="flex flex-col gap-4">
         <div className="p-4 rounded-xl border border-base-300 shadow-sm">
           <p className="text-xs text-base-content/50 font-semibold mb-2 uppercase">Quick Action</p>
-          <button className="btn btn-primary btn-sm w-full font-normal">List New Property</button>
+          <Link href="/list-property" className="btn btn-primary btn-sm w-full font-normal">
+            List New Property
+          </Link>
         </div>
       </div>
     </div>
