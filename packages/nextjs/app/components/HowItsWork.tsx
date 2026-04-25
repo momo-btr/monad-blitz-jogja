@@ -14,7 +14,7 @@ export default function HowItWorks() {
           </div>
 
           <div className="space-y-8">
-            <div className="flex gap-6 p-4 rounded-lg bg-surface-container-lowest shadow-ambient border border-emerald-100">
+            <div className="flex gap-6 p-4 rounded-lg bg-base-100-container-lowest shadow-ambient border border-emerald-100">
               <span className="font-display text-xl font-bold text-emerald-600">01</span>
               <div>
                 <h4 className="font-display text-lg font-bold text-on-surface mb-1 text-emerald-600">Legal Validation</h4>
@@ -24,7 +24,7 @@ export default function HowItWorks() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-4 rounded-lg bg-surface-container-lowest shadow-ambient border border-emerald-100">
+            <div className="flex gap-6 p-4 rounded-lg bg-base-100-container-lowest shadow-ambient border border-emerald-100">
               <span className="font-display text-xl font-bold text-emerald-600">02</span>
               <div>
                 <h4 className="font-display text-lg font-bold text-on-surface mb-1 text-emerald-600">Asset Tokenization</h4>
@@ -34,7 +34,7 @@ export default function HowItWorks() {
               </div>
             </div>
 
-            <div className="flex gap-6 p-4 rounded-lg bg-surface-container-lowest shadow-ambient border border-emerald-100">
+            <div className="flex gap-6 p-4 rounded-lg bg-base-100-container-lowest shadow-ambient border border-emerald-100">
               <span className="font-display text-xl font-bold text-emerald-600">03</span>
               <div>
                 <h4 className="font-display text-lg font-bold text-on-surface mb-1 text-emerald-600">Instant Settlement</h4>

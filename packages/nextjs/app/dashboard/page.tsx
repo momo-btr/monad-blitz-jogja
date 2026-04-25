@@ -59,7 +59,7 @@ export default function Dashboard() {
           <p className="text-base-content/60">Welcome back. Your portfolio grew by 4.2% this month.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content bg-surface font-normal">
+          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content bg-base-100 font-normal">
             <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
             Reports
           </button>
@@ -73,7 +73,7 @@ export default function Dashboard() {
       {/* Top Grid: KPI & Map */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* KPI Card */}
-        <div className="bg-surface rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
+        <div className="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-base-content/50 uppercase tracking-wider">
@@ -102,14 +102,14 @@ export default function Dashboard() {
         </div>
 
         {/* Map Explorer */}
-        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
-          <div className="absolute top-4 left-4 z-[400] bg-surface/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
+        <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
+          <div className="absolute top-4 left-4 z-[400] bg-base-100/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
             <span className="text-sm font-medium text-base-content">Interactive Explorer: Central Valley</span>
           </div>
           {/* Controls Overlay */}
           <div className="absolute bottom-4 right-4 z-[400] flex gap-2">
-            <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
+            <button className="w-10 h-10 bg-base-100 rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
               <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
@@ -119,7 +119,7 @@ export default function Dashboard() {
                 />
               </svg>
             </button>
-            <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
+            <button className="w-10 h-10 bg-base-100 rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
               <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
@@ -140,7 +140,7 @@ export default function Dashboard() {
       {/* Bottom Grid: Transactions & Allocations */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Transactions */}
-        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-base-200 flex justify-between items-center">
             <h3 className="font-semibold text-base-content">Recent Land Transactions</h3>
             <button className="text-sm text-primary font-medium hover:underline">View All</button>
@@ -181,7 +181,7 @@ export default function Dashboard() {
 
         {/* Asset Allocation */}
         <div className="flex flex-col gap-6">
-          <div className="bg-surface rounded-2xl p-6 border border-base-300 shadow-sm flex-1">
+          <div className="bg-base-100 rounded-2xl p-6 border border-base-300 shadow-sm flex-1">
             <h3 className="font-semibold text-base-content mb-6">Asset Allocation</h3>
             <div className="flex flex-col gap-5">
               {[
