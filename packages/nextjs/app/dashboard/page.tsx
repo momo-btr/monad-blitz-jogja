@@ -1,28 +1,19 @@
 "use client";
 
 import { ArrowDownTrayIcon, BuildingOffice2Icon, MapIcon, PlusIcon } from "@heroicons/react/24/outline";
-import DynamicMap from "~~/components/DynamicMap";
+import { DynamicMap } from "~~/components/DynamicMap";
 
 // Mock GeoJSON for the dashboard map
 const mockGeoJson = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {},
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [113.8, -0.7],
-            [114.0, -0.7],
-            [114.0, -0.9],
-            [113.8, -0.9],
-            [113.8, -0.7],
-          ],
-        ],
-      },
-    },
+  type: "Polygon",
+  coordinates: [
+    [
+      [113.8, -0.7],
+      [114.0, -0.7],
+      [114.0, -0.9],
+      [113.8, -0.9],
+      [113.8, -0.7],
+    ],
   ],
 };
 
@@ -141,7 +132,7 @@ export default function Dashboard() {
           </div>
           {/* Real Leaflet Map component */}
           <div className="w-full h-full">
-            <DynamicMap geoJsonData={mockGeoJson} center={[-0.8, 113.9]} zoom={10} interactive={true} />
+            <DynamicMap geojson={mockGeoJson} className="h-full" />
           </div>
         </div>
       </div>

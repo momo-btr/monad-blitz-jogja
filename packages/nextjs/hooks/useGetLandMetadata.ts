@@ -1,11 +1,5 @@
-import { useState, useEffect } from "react";
-import { useReadContract } from "wagmi";
-import { parseAbi } from "viem";
-
-// Minimal ERC721 ABI for reading tokenURI
-const minimalERC721Abi = parseAbi([
-  "function tokenURI(uint256 tokenId) view returns (string)",
-]);
+import { useEffect, useState } from "react";
+import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 
 export const useGetLandMetadata = (tokenId: bigint) => {
   const [metadata, setMetadata] = useState<any>(null);
@@ -13,9 +7,8 @@ export const useGetLandMetadata = (tokenId: bigint) => {
   const [isLoading, setIsLoading] = useState(false);
 
   // 1. Read URI from Monad Testnet Contract
-  const { data: tokenURI } = useReadContract({
-    address: "0x0000000000000000000000000000000000000000", // TODO: Replace with actual contract address
-    abi: minimalERC721Abi,
+  const { data: tokenURI } = useScaffoldReadContract({
+    contractName: "TerraformaLand",
     functionName: "tokenURI",
     args: [tokenId],
   });
@@ -30,11 +23,14 @@ export const useGetLandMetadata = (tokenId: bigint) => {
           const data = await res.json();
           setMetadata(data);
 
-          if (data.attributes?.geoJson) {
+          if (data.geojson) {
+            setGeoJson(typeof data.geojson === "string" ? JSON.parse(data.geojson) : data.geojson);
+          } else if (data.attributes?.geoJson) {
+            // Fallback for old mock format
             setGeoJson(
               typeof data.attributes.geoJson === "string"
                 ? JSON.parse(data.attributes.geoJson)
-                : data.attributes.geoJson
+                : data.attributes.geoJson,
             );
           }
         } else {
@@ -47,8 +43,8 @@ export const useGetLandMetadata = (tokenId: bigint) => {
               coordinates: [
                 [
                   [104.7566, -3.105],
-                  [104.7600, -3.105],
-                  [104.7600, -3.102],
+                  [104.76, -3.105],
+                  [104.76, -3.102],
                   [104.7566, -3.102],
                   [104.7566, -3.105],
                 ],
@@ -66,7 +62,7 @@ export const useGetLandMetadata = (tokenId: bigint) => {
               soilQuality: "High",
               carbonOffset: "500t",
               buildingPermit: "Yes",
-            }
+            },
           });
           setGeoJson(mockGeoJson);
         }
