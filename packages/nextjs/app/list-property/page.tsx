@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { parseEther } from "viem";
 import { useAccount } from "wagmi";
 import { useScaffoldWriteContract } from "~~/hooks/scaffold-eth";
 import { notification } from "~~/utils/scaffold-eth";
@@ -17,7 +18,10 @@ export default function ListPropertyPage() {
   const [landUse, setLandUse] = useState("Residential (R-1)");
   const [description, setDescription] = useState("");
   const [areaSqm, setAreaSqm] = useState("");
-  const [geojsonInput, setGeojsonInput] = useState('[[[106.81, -6.18], [106.82, -6.18], [106.82, -6.19], [106.81, -6.19], [106.81, -6.18]]]');
+  const [priceMon, setPriceMon] = useState("");
+  const [geojsonInput, setGeojsonInput] = useState(
+    "[[[106.81, -6.18], [106.82, -6.18], [106.82, -6.19], [106.81, -6.19], [106.81, -6.18]]]",
+  );
 
   const [isUploading, setIsUploading] = useState(false);
 
@@ -59,7 +63,7 @@ export default function ListPropertyPage() {
       let coordinates;
       try {
         coordinates = JSON.parse(geojsonInput);
-      } catch (err) {
+      } catch {
         throw new Error("Invalid GeoJSON coordinates format");
       }
 
@@ -74,6 +78,7 @@ export default function ListPropertyPage() {
           { trait_type: "Kecamatan", value: kecamatan },
           { trait_type: "NIB", value: nib },
           { trait_type: "Land Use", value: landUse },
+          { trait_type: "Price", value: `${priceMon} MON` },
         ],
         geojson: {
           type: "Polygon",
@@ -95,18 +100,10 @@ export default function ListPropertyPage() {
       notification.success("Metadata uploaded to IPFS successfully!");
 
       // Step D: Mint Contract
-      // Signature: mintLandCertificate(address owner, string geoJSONHash, string locationProvince, string locationCity, uint256 areaSqm, string nib)
-      // Assuming geoJSONHash parameter takes the metadata URI or IPFS hash in this context.
+      // Signature: mintLandCertificate(address owner, string geoJSONHash, string locationProvince, string locationCity, uint256 areaSqm, string nib, uint256 priceWei)
       await writeContractAsync({
         functionName: "mintLandCertificate",
-        args: [
-          address,
-          metadataIpfsUrl, // We store the full metadata IPFS URL here
-          province,
-          city,
-          BigInt(areaSqm || "0"),
-          nib
-        ],
+        args: [address, metadataIpfsUrl, province, city, BigInt(areaSqm || "0"), nib, parseEther(priceMon || "0")],
       });
 
       notification.success("Property listed successfully!");
@@ -116,10 +113,11 @@ export default function ListPropertyPage() {
       setNib("");
       setDescription("");
       setAreaSqm("");
-
-    } catch (error: any) {
+      setPriceMon("");
+    } catch (error: unknown) {
+      const message = error instanceof Error ? error.message : "Failed to list property";
       console.error("Listing error:", error);
-      notification.error(error.message || "Failed to list property");
+      notification.error(message);
     } finally {
       setIsUploading(false);
     }
@@ -145,7 +143,7 @@ export default function ListPropertyPage() {
                 placeholder="e.g. 12.03.04.05.00678"
                 className="input input-bordered w-full"
                 value={nib}
-                onChange={(e) => setNib(e.target.value)}
+                onChange={e => setNib(e.target.value)}
                 required
               />
             </div>
@@ -160,9 +158,29 @@ export default function ListPropertyPage() {
                 placeholder="e.g. 1500"
                 className="input input-bordered w-full"
                 value={areaSqm}
-                onChange={(e) => setAreaSqm(e.target.value)}
+                onChange={e => setAreaSqm(e.target.value)}
                 required
               />
+            </div>
+
+            {/* Asking Price */}
+            <div className="form-control w-full">
+              <label className="label">
+                <span className="label-text font-semibold">Asking Price (MON)</span>
+              </label>
+              <label className="input input-bordered flex items-center gap-2 w-full">
+                <input
+                  type="number"
+                  placeholder="e.g. 450"
+                  className="grow"
+                  min="0"
+                  step="0.000001"
+                  value={priceMon}
+                  onChange={e => setPriceMon(e.target.value)}
+                  required
+                />
+                <span className="text-base-content/50 font-semibold text-sm">MON</span>
+              </label>
             </div>
 
             {/* Province */}
@@ -174,7 +192,7 @@ export default function ListPropertyPage() {
                 type="text"
                 className="input input-bordered w-full"
                 value={province}
-                onChange={(e) => setProvince(e.target.value)}
+                onChange={e => setProvince(e.target.value)}
                 required
               />
             </div>
@@ -188,7 +206,7 @@ export default function ListPropertyPage() {
                 type="text"
                 className="input input-bordered w-full"
                 value={city}
-                onChange={(e) => setCity(e.target.value)}
+                onChange={e => setCity(e.target.value)}
                 required
               />
             </div>
@@ -202,7 +220,7 @@ export default function ListPropertyPage() {
                 type="text"
                 className="input input-bordered w-full"
                 value={kecamatan}
-                onChange={(e) => setKecamatan(e.target.value)}
+                onChange={e => setKecamatan(e.target.value)}
                 required
               />
             </div>
@@ -216,7 +234,7 @@ export default function ListPropertyPage() {
                 type="text"
                 className="input input-bordered w-full"
                 value={landUse}
-                onChange={(e) => setLandUse(e.target.value)}
+                onChange={e => setLandUse(e.target.value)}
                 required
               />
             </div>
@@ -231,7 +249,7 @@ export default function ListPropertyPage() {
               className="textarea textarea-bordered h-24 w-full"
               placeholder="Detailed description of the property..."
               value={description}
-              onChange={(e) => setDescription(e.target.value)}
+              onChange={e => setDescription(e.target.value)}
               required
             ></textarea>
           </div>
@@ -244,13 +262,11 @@ export default function ListPropertyPage() {
             <textarea
               className="textarea textarea-bordered font-mono text-xs h-24 w-full"
               value={geojsonInput}
-              onChange={(e) => setGeojsonInput(e.target.value)}
+              onChange={e => setGeojsonInput(e.target.value)}
               required
             ></textarea>
             <label className="label">
-              <span className="label-text-alt text-base-content/50">
-                Format: [[[lng, lat], [lng, lat], ...]]
-              </span>
+              <span className="label-text-alt text-base-content/50">Format: [[[lng, lat], [lng, lat], ...]]</span>
             </label>
           </div>
 
@@ -263,7 +279,7 @@ export default function ListPropertyPage() {
               type="file"
               accept="image/*"
               className="file-input file-input-bordered file-input-primary w-full"
-              onChange={(e) => setFile(e.target.files?.[0] || null)}
+              onChange={e => setFile(e.target.files?.[0] || null)}
               required
             />
           </div>
@@ -271,11 +287,7 @@ export default function ListPropertyPage() {
           <div className="divider"></div>
 
           {/* Submit */}
-          <button
-            type="submit"
-            className="btn btn-primary w-full text-lg"
-            disabled={isUploading || isPending}
-          >
+          <button type="submit" className="btn btn-primary w-full text-lg" disabled={isUploading || isPending}>
             {isUploading ? (
               <>
                 <span className="loading loading-spinner"></span>

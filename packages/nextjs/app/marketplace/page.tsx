@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { formatEther } from "viem";
 import { CheckCircleIcon, ClockIcon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
 import { useLandRegistry } from "~~/hooks/useLandRegistry";
@@ -48,6 +49,7 @@ const LandCard = ({ tokenId }: { tokenId: bigint }) => {
   if (!landPlot || landPlot.id === 0n) return null;
 
   const isVerified = landPlot.isVerified;
+  const priceMon = landPlot.priceWei > 0n ? formatEther(landPlot.priceWei) : null;
 
   return (
     <div className="card bg-white shadow-sm border border-base-300 overflow-hidden hover:shadow-md transition-shadow duration-200">
@@ -103,6 +105,17 @@ const LandCard = ({ tokenId }: { tokenId: bigint }) => {
               {isVerified ? "Verified" : "Pending"}
             </p>
           </div>
+        </div>
+
+        {/* Price */}
+        <div className="mt-1">
+          {priceMon && (
+            <div className="flex items-baseline gap-1">
+              <span className="text-xl font-bold text-primary">{priceMon}</span>
+              <span className="text-xs text-base-content/50 font-medium">MON</span>
+            </div>
+          )}
+          {!priceMon && <span className="text-sm text-base-content/40 italic">Price on request</span>}
         </div>
 
         {/* CTA */}
