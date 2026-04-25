@@ -75,8 +75,8 @@ const LandCard = ({ tokenId }: { tokenId: bigint }) => {
 
         {/* NIB */}
         <div>
-          <p className="text-xs font-semibold text-base-content/50 uppercase tracking-wider mb-1">NIB</p>
-          <p className="font-bold text-base-content text-sm break-all leading-snug">
+          <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">NIB</p>
+          <p className="font-bold text-black/70 text-sm break-all leading-snug">
             {landPlot.NIB_NomorIdentitasBidang || "—"}
           </p>
         </div>
@@ -84,21 +84,21 @@ const LandCard = ({ tokenId }: { tokenId: bigint }) => {
         {/* Location + Area grid */}
         <div className="grid grid-cols-2 gap-3 text-xs">
           <div>
-            <p className="text-base-content/50 font-semibold uppercase tracking-wider mb-0.5">Province</p>
-            <p className="text-base-content">{landPlot.locationProvince || "—"}</p>
+            <p className="text-black/50 font-semibold uppercase tracking-wider mb-0.5">Province</p>
+            <p className="text-black">{landPlot.locationProvince || "—"}</p>
           </div>
           <div>
-            <p className="text-base-content/50 font-semibold uppercase tracking-wider mb-0.5">City</p>
-            <p className="text-base-content">{landPlot.locationCity || "—"}</p>
+            <p className="text-black/50 font-semibold uppercase tracking-wider mb-0.5">City</p>
+            <p className="text-black">{landPlot.locationCity || "—"}</p>
           </div>
           <div>
-            <p className="text-base-content/50 font-semibold uppercase tracking-wider mb-0.5">Area</p>
-            <p className="text-base-content">
+            <p className="text-black/50 font-semibold uppercase tracking-wider mb-0.5">Area</p>
+            <p className="text-black">
               {landPlot.areaSqm !== undefined ? `${landPlot.areaSqm.toLocaleString()} m²` : "—"}
             </p>
           </div>
           <div>
-            <p className="text-base-content/50 font-semibold uppercase tracking-wider mb-0.5">Status</p>
+            <p className="text-black/50 font-semibold uppercase tracking-wider mb-0.5">Status</p>
             <p className={isVerified ? "text-success font-medium" : "text-warning font-medium"}>
               {isVerified ? "Verified" : "Pending"}
             </p>
@@ -142,8 +142,8 @@ export default function Marketplace() {
       {/* ── Header ──────────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-base-content mb-2">Land Registry</h1>
-          <p className="text-base-content/70">
+          <h1 className="text-3xl font-bold text-black mb-2">Land Registry</h1>
+          <p className="text-black/70">
             On-chain land certificates on Monad Testnet.&nbsp;
             <span className="font-semibold text-primary">{isLoading ? "…" : total}</span>&nbsp;parcel
             {total !== 1 ? "s" : ""} registered.
@@ -166,11 +166,11 @@ export default function Marketplace() {
         <div className="flex flex-wrap gap-4 items-center">
           {/* Search */}
           <div className="relative w-full md:w-80">
-            <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-base-content/40 pointer-events-none" />
+            <MagnifyingGlassIcon className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-black/40 pointer-events-none" />
             <input
               type="text"
               placeholder="Search by NIB, owner, or token ID…"
-              className="input input-bordered bg-white text-base-content border-base-300 pl-9 w-full focus:outline-primary"
+              className="input input-bordered bg-white text-black border-base-300 pl-9 w-full focus:outline-primary"
               value={search}
               onChange={e => setSearch(e.target.value)}
             />

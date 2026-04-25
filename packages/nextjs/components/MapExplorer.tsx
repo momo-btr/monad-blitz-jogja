@@ -48,7 +48,7 @@ export default function MapExplorer({
   if (!mounted) {
     return (
       <div className="w-full h-full bg-base-300 animate-pulse flex items-center justify-center">
-        <span className="text-base-content/50">Loading Map...</span>
+        <span className="text-black/50">Loading Map...</span>
       </div>
     );
   }

@@ -9,8 +9,8 @@ import { MapRenderer } from "./MapRenderer";
 const DynamicMapComponent = dynamic(() => import("./MapRenderer").then(mod => mod.MapRenderer), {
   ssr: false,
   loading: () => (
-    <div className="h-64 w-full rounded-xl skeleton bg-base-300 flex items-center justify-center">
-      <span className="loading loading-spinner loading-md text-primary"></span>
+    <div className="w-full h-full bg-base-300 animate-pulse flex items-center justify-center rounded-xl">
+      <span className="text-black/50">Loading Map...</span>
     </div>
   ),
 });

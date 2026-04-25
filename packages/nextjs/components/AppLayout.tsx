@@ -16,7 +16,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
   ];
 
   return (
-    <div className="flex h-screen bg-white text-base-content font-sans">
+    <div className="flex h-screen bg-white text-black font-sans">
       {/* Vertical Navigation */}
       <aside className="w-64 bg-white border-r border-base-300 flex flex-col justify-between p-4 z-10 shadow-sm">
         <div>
@@ -32,11 +32,11 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
                   href={item.href}
                   className={`flex items-center gap-3 px-4 py-3 rounded-lg font-medium transition-all duration-200 ${
                     active
-                      ? "bg-primary text-primary-content shadow-sm"
-                      : "hover:bg-base-200 text-base-content/70 hover:text-base-content"
+                      ? "bg-primary text-black shadow-sm"
+                      : "hover:bg-base-200 text-black/70 hover:text-black"
                   }`}
                 >
-                  <item.icon className={`w-5 h-5 ${active ? "text-primary-content" : "text-base-content/50"}`} />
+                  <item.icon className={`w-5 h-5 ${active ? "text-black" : "text-black/50"}`} />
                   {item.name}
                 </Link>
               );
@@ -47,7 +47,7 @@ export const AppLayout = ({ children }: { children: React.ReactNode }) => {
         <div className="pt-4 border-t border-base-300 mt-auto">
           <Link
             href="/list-property"
-            className="btn w-full btn-outline border-primary text-primary hover:bg-primary hover:text-primary-content hover:border-primary transition-colors"
+            className="btn w-full btn-outline border-primary text-primary hover:bg-primary hover:text-black hover:border-primary transition-colors"
           >
             List New Property
           </Link>

@@ -59,7 +59,7 @@ export default function Hero() {
 
         <div className="absolute -bottom-8 -left-8 bg-white p-5 rounded-lg shadow-ambient border border-gray-100 w-72">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-emerald-600 rounded-base flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 bg-emerald-600 rounded-base flex items-center justify-center text-black font-bold">
               LC
             </div>
             <div>

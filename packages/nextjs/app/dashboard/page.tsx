@@ -46,8 +46,8 @@ export default function Dashboard() {
       {/* ── Header ───────────────────────────────────────────────────────────── */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-base-content mb-1">Land Registry Dashboard</h1>
-          <p className="text-base-content/60">
+          <h1 className="text-3xl font-bold text-black mb-1">Investment Overview</h1>
+          <p className="text-black/60">
             {address
               ? `${isAdmin ? "🔑 Admin · " : ""}Viewing Monad Testnet land registry.`
               : "Connect your wallet to interact with the registry."}
@@ -56,13 +56,13 @@ export default function Dashboard() {
 
         <div className="flex items-center gap-3">
           {/* Reports — placeholder action */}
-          <button className="btn btn-outline border-base-300 hover:bg-base-200 bg-base-100 font-normal">
+          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-black bg-surface font-normal">
             <ChartBarIcon className="w-4 h-4 mr-1" />
             Reports
           </button>
 
           {/* Buy Land — always visible, links to the mint / list-property page */}
-          <Link href="/list-property" className="btn btn-primary font-normal text-primary-content">
+          <Link href="/list-property" className="btn btn-primary font-normal text-black">
             <PlusIcon className="w-4 h-4 mr-1" />
             Buy Land
           </Link>
@@ -75,20 +75,20 @@ export default function Dashboard() {
         <div className="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-base-content/50 uppercase tracking-wider">
-                Total Parcels Registered
+              <span className="text-sm font-semibold text-black/50 uppercase tracking-wider">
+                Total Portfolio Value
               </span>
             </div>
 
             {isLoading ? (
               <div className="h-14 flex items-center">
-                <span className="loading loading-dots loading-md text-primary" />
+                <span className="loading loading-dots loading-md text-black" />
               </div>
             ) : (
-              <h2 className="text-5xl font-bold text-base-content mb-4 tracking-tight">{total}</h2>
+              <h2 className="text-5xl font-bold text-black mb-4 tracking-tight">{total}</h2>
             )}
 
-            <p className="text-base-content/70 text-sm">
+            <p className="text-black/70 text-sm">
               On-chain land certificates
               <br />
               on Monad Testnet
@@ -97,7 +97,7 @@ export default function Dashboard() {
 
           <div className="flex items-center gap-8 mt-12 pt-6 border-t border-base-200">
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">My Parcels</p>
+              <p className="text-xs text-black/50 uppercase font-semibold mb-1">My Parcels</p>
               {isLoading ? (
                 <div className="h-5 bg-base-200 rounded w-6 animate-pulse" />
               ) : (
@@ -105,7 +105,7 @@ export default function Dashboard() {
               )}
             </div>
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Network</p>
+              <p className="text-xs text-black/50 uppercase font-semibold mb-1">Network</p>
               <p className="text-lg font-medium text-primary">Monad Testnet</p>
             </div>
           </div>
@@ -115,7 +115,7 @@ export default function Dashboard() {
         <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
           <div className="absolute top-4 left-4 z-[400] bg-base-100/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            <span className="text-sm font-medium text-base-content">Map Explorer · Indonesia</span>
+            <span className="text-sm font-medium text-black">Map Explorer · Indonesia</span>
           </div>
           <div className="w-full h-full">
             <DynamicMap geojson={mapGeoJson} className="h-full" />
@@ -124,9 +124,9 @@ export default function Dashboard() {
       </div>
 
       {/* ── Recent Land Registrations ─────────────────────────────────────────── */}
-      <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
+      <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
         <div className="p-6 border-b border-base-200 flex justify-between items-center">
-          <h3 className="font-semibold text-base-content">Recent Land Registrations</h3>
+          <h3 className="font-semibold text-black">Recent Land Registrations</h3>
           <Link href="/marketplace" className="text-sm text-primary font-medium hover:underline">
             View All
           </Link>
@@ -137,13 +137,13 @@ export default function Dashboard() {
             <span className="loading loading-spinner text-primary" />
           </div>
         ) : recentMints.length === 0 ? (
-          <div className="flex items-center justify-center h-32 text-base-content/50 text-sm">
+          <div className="flex items-center justify-center h-32 text-black/50 text-sm">
             No land certificates minted yet.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="table w-full text-sm">
-              <thead className="bg-base-200 text-base-content/60 font-medium">
+              <thead className="bg-base-200 text-black/60 font-medium">
                 <tr>
                   <th className="py-4 font-normal uppercase tracking-wider text-xs">Token ID</th>
                   <th className="py-4 font-normal uppercase tracking-wider text-xs">NIB</th>
@@ -161,19 +161,19 @@ export default function Dashboard() {
                     <td className="py-4">
                       <Link
                         href={`/property/${land.tokenId.toString()}`}
-                        className="font-mono font-bold text-primary hover:underline"
+                        className="font-mono font-bold text-black hover:underline"
                       >
                         #{land.tokenId.toString()}
                       </Link>
                     </td>
 
-                    <td className="py-4 font-mono text-xs text-base-content/80">{land.nib || "—"}</td>
+                    <td className="py-4 font-mono text-xs text-black/80">{land.nib || "—"}</td>
 
                     <td className="py-4">
                       <Address address={land.owner} />
                     </td>
 
-                    <td className="py-4 font-mono text-base-content/60 text-xs">{land.blockNumber.toString()}</td>
+                    <td className="py-4 font-mono text-black/60 text-xs">{land.blockNumber.toString()}</td>
 
                     <td className="py-4">
                       <a
@@ -197,8 +197,8 @@ export default function Dashboard() {
       {isAdmin && (
         <div className="bg-base-100 rounded-2xl border border-base-300 shadow-sm p-6 flex items-center justify-between">
           <div>
-            <p className="font-semibold text-base-content">Admin Tools</p>
-            <p className="text-sm text-base-content/60 mt-0.5">Export registry data or mint new certificates.</p>
+            <p className="font-semibold text-black">Admin Tools</p>
+            <p className="text-sm text-black/60 mt-0.5">Export registry data or mint new certificates.</p>
           </div>
           <div className="flex gap-3">
             <button className="btn btn-outline border-base-300 hover:bg-base-200 bg-base-100 font-normal btn-sm">

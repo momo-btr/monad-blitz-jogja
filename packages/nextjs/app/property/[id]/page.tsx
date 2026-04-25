@@ -150,12 +150,12 @@ export default function PropertyDetails() {
   return (
     <div className="space-y-6 animate-fade-in max-w-7xl mx-auto pb-12">
       {/* Breadcrumbs */}
-      <div className="text-sm breadcrumbs text-base-content/60">
+      <div className="text-sm breadcrumbs text-black/60">
         <ul>
           <li>
             <Link href="/marketplace">Registry</Link>
           </li>
-          <li className="font-semibold text-base-content">{landPlot.NIB_NomorIdentitasBidang || `Token #${id}`}</li>
+          <li className="font-semibold text-black">{landPlot.NIB_NomorIdentitasBidang || `Token #${id}`}</li>
         </ul>
       </div>
 
@@ -167,12 +167,12 @@ export default function PropertyDetails() {
           <div className="space-y-4">
             <div className="flex justify-between items-start gap-4">
               <div>
-                <h1 className="text-3xl font-bold text-base-content flex items-center gap-2 mb-2">
+                <h1 className="text-3xl font-bold text-black flex items-center gap-2 mb-2">
                   {pageTitle}
                   {landPlot.isVerified && <CheckBadgeIcon className="w-8 h-8 text-primary flex-shrink-0" />}
                 </h1>
-                <p className="text-base-content/70 flex items-center gap-1.5 text-lg">
-                  <MapPinIcon className="w-5 h-5 text-base-content/50 flex-shrink-0" />
+                <p className="text-black/70 flex items-center gap-1.5 text-lg">
+                  <MapPinIcon className="w-5 h-5 text-black/50 flex-shrink-0" />
                   {[landPlot.locationCity, landPlot.locationProvince].filter(Boolean).join(", ") || "Location not set"}
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function PropertyDetails() {
 
           {/* Land Certificate Details grid */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300">
-            <h2 className="text-xl font-bold text-base-content mb-6">Land Certificate Details</h2>
+            <h2 className="text-xl font-bold text-black mb-6">Land Certificate Details</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {(
                 [
@@ -217,10 +217,10 @@ export default function PropertyDetails() {
                 ] as Array<{ label: string; value: string; className?: string }>
               ).map((spec, idx) => (
                 <div key={idx} className="bg-base-200/50 p-4 rounded-xl border border-base-200">
-                  <p className="text-xs font-semibold text-base-content/50 uppercase tracking-wider mb-1">
+                  <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">
                     {spec.label}
                   </p>
-                  <p className={`font-medium text-base-content ${spec.className ?? ""}`}>{spec.value}</p>
+                  <p className={`font-medium text-black ${spec.className ?? ""}`}>{spec.value}</p>
                 </div>
               ))}
             </div>
@@ -274,7 +274,7 @@ export default function PropertyDetails() {
               </div>
             </div>
           ) : (
-            <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300 text-center text-base-content/40">
+            <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300 text-center text-black/40">
               <GlobeAltIcon className="w-10 h-10 mx-auto mb-2" />
               <p>No geospatial data available. Upload metadata to IPFS with GeoJSON to enable the map view.</p>
             </div>
@@ -283,18 +283,18 @@ export default function PropertyDetails() {
           {/* Provenance — on-chain LandMinted events only */}
           <div className="bg-white rounded-2xl shadow-sm border border-base-300 overflow-hidden">
             <div className="p-6 border-b border-base-200">
-              <h2 className="text-xl font-bold text-base-content flex items-center gap-2">
+              <h2 className="text-xl font-bold text-black flex items-center gap-2">
                 <ArrowsRightLeftIcon className="w-6 h-6 text-primary" />
                 Mint History
               </h2>
             </div>
 
             {!mintEvents || mintEvents.length === 0 ? (
-              <div className="p-8 text-center text-base-content/40 text-sm">No mint events found for this token.</div>
+              <div className="p-8 text-center text-black/40 text-sm">No mint events found for this token.</div>
             ) : (
               <div className="overflow-x-auto">
                 <table className="table w-full">
-                  <thead className="bg-base-200/50 text-base-content/70 text-xs uppercase">
+                  <thead className="bg-base-200/50 text-black/70 text-xs uppercase">
                     <tr>
                       <th>Block</th>
                       <th>Event</th>
@@ -344,7 +344,7 @@ export default function PropertyDetails() {
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-base-300">
               {/* Verification status badge */}
               <div className="flex justify-between items-center mb-4">
-                <span className="text-base-content/60 font-medium">Certificate Status</span>
+                <span className="text-black/60 font-medium">Certificate Status</span>
                 {landPlot.isVerified ? (
                   <span className="badge bg-success/10 text-success border-none font-bold gap-1 px-3 py-2">
                     <CheckCircleIcon className="w-4 h-4" /> Verified
@@ -358,7 +358,7 @@ export default function PropertyDetails() {
 
               {/* Token ID */}
               <div className="mb-4 pb-4 border-b border-base-200">
-                <p className="text-xs text-base-content/50 font-semibold uppercase mb-1">Token</p>
+                <p className="text-xs text-black/50 font-semibold uppercase mb-1">Token</p>
                 <p className="font-mono text-primary font-bold text-lg">#{tokenId.toString()}</p>
               </div>
 
@@ -385,7 +385,7 @@ export default function PropertyDetails() {
                 {/* Case 1: wallet not connected */}
                 {!connectedAddress ? (
                   <button
-                    className="btn btn-outline border-base-300 w-full text-base-content/50 cursor-not-allowed"
+                    className="btn btn-outline border-base-300 w-full text-black/50 cursor-not-allowed"
                     disabled
                   >
                     Connect Wallet to Acquire
@@ -509,11 +509,11 @@ export default function PropertyDetails() {
               </h3>
               <div className="space-y-3 text-sm">
                 <div>
-                  <p className="text-xs text-base-content/50 font-semibold uppercase mb-1">Contract Standard</p>
+                  <p className="text-xs text-black/50 font-semibold uppercase mb-1">Contract Standard</p>
                   <p className="text-base-content font-medium">ERC-721 (Monad Testnet)</p>
                 </div>
                 <div>
-                  <p className="text-xs text-base-content/50 font-semibold uppercase mb-1">Token ID</p>
+                  <p className="text-xs text-black/50 font-semibold uppercase mb-1">Token ID</p>
                   <p className="font-mono text-primary font-bold">#{tokenId.toString()}</p>
                 </div>
                 {landPlot.geoJSONHash && (

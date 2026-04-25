@@ -208,8 +208,8 @@ export default function Portfolio() {
     <div className="space-y-8 animate-fade-in">
       {/* Header */}
       <div>
-        <h1 className="text-3xl font-bold text-base-content mb-2">My Land Portfolio</h1>
-        <p className="text-base-content/70">
+        <h1 className="text-3xl font-bold text-black mb-2">My Land Portfolio</h1>
+        <p className="text-black/70">
           Land certificates originally minted to your address on Monad Testnet.&nbsp;
           {!isLoading && (
             <>
@@ -223,7 +223,7 @@ export default function Portfolio() {
       {/* ── Metrics ─────────────────────────────────────────────────────────── */}
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
         <div className="bg-white p-5 rounded-xl shadow-sm border border-base-300">
-          <p className="text-sm text-base-content/60 font-medium mb-1">My Parcels</p>
+          <p className="text-sm text-black/60 font-medium mb-1">My Parcels</p>
           {isLoading ? (
             <div className="h-8 bg-base-200 rounded w-10 animate-pulse mt-1" />
           ) : (
@@ -232,25 +232,25 @@ export default function Portfolio() {
         </div>
 
         <div className="bg-white p-5 rounded-xl shadow-sm border border-base-300">
-          <p className="text-sm text-base-content/60 font-medium mb-1">Total Area</p>
+          <p className="text-sm text-black/60 font-medium mb-1">Total Area</p>
           {isLoading ? (
             <div className="h-8 bg-base-200 rounded w-24 animate-pulse mt-1" />
           ) : totalArea === 0n && myLands.length > 0 ? (
-            <p className="text-lg font-semibold text-base-content/50 mt-1">Loading…</p>
+            <p className="text-lg font-semibold text-black/50 mt-1">Loading…</p>
           ) : (
-            <p className="text-3xl font-bold text-base-content">
+            <p className="text-3xl font-bold text-black">
               {Number(totalArea).toLocaleString()}
-              <span className="text-lg font-normal text-base-content/60 ml-1">m²</span>
+              <span className="text-lg font-normal text-black/60 ml-1">m²</span>
             </p>
           )}
         </div>
 
         <div className="bg-white p-5 rounded-xl shadow-sm border border-base-300">
-          <p className="text-sm text-base-content/60 font-medium mb-1">Total Registry</p>
+          <p className="text-sm text-black/60 font-medium mb-1">Total Registry</p>
           {isLoading ? (
             <div className="h-8 bg-base-200 rounded w-10 animate-pulse mt-1" />
           ) : (
-            <p className="text-3xl font-bold text-base-content">{total}</p>
+            <p className="text-3xl font-bold text-black">{total}</p>
           )}
         </div>
       </div>
@@ -263,7 +263,7 @@ export default function Portfolio() {
           ))}
         </div>
       ) : myLands.length === 0 ? (
-        <div className="flex flex-col items-center justify-center h-64 text-base-content/50 gap-4">
+        <div className="flex flex-col items-center justify-center h-64 text-black/50 gap-4">
           <div className="w-16 h-16 rounded-full bg-base-200 flex items-center justify-center">
             <MapIcon className="w-8 h-8 text-base-content/30" />
           </div>
@@ -296,7 +296,7 @@ export default function Portfolio() {
       {!isLoading && myLands.length > 0 && (
         <div className="bg-white rounded-xl shadow-sm border border-base-300 overflow-hidden">
           <div className="p-6 border-b border-base-200 flex justify-between items-center">
-            <h2 className="text-lg font-bold text-base-content flex items-center gap-2">
+            <h2 className="text-lg font-bold text-black flex items-center gap-2">
               <DocumentTextIcon className="w-5 h-5 text-primary" />
               Mint History
             </h2>
@@ -307,7 +307,7 @@ export default function Portfolio() {
 
           <div className="overflow-x-auto">
             <table className="table w-full text-sm">
-              <thead className="bg-base-200/50 text-base-content/70">
+              <thead className="bg-base-200/50 text-black/70">
                 <tr>
                   <th className="font-semibold uppercase tracking-wider text-xs py-3">Token ID</th>
                   <th className="font-semibold uppercase tracking-wider text-xs py-3">NIB</th>
