@@ -54,7 +54,7 @@ export default function Portfolio() {
       {/* Metrics Row */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {metrics.map((metric, idx) => (
-          <div key={idx} className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-300 flex flex-col">
+          <div key={idx} className="bg-white p-6 rounded-xl shadow-sm border border-base-300 flex flex-col">
             <span className="text-sm font-medium text-base-content/60 mb-2">{metric.title}</span>
             <span className="text-3xl font-bold text-base-content mb-3">{metric.value}</span>
             <div className={`flex items-center text-sm font-medium ${metric.isNeutral ? 'text-base-content/50' : metric.isPositive ? 'text-success' : 'text-error'}`}>
@@ -68,10 +68,10 @@ export default function Portfolio() {
       </div>
 
       {/* Performance Chart (Mock) */}
-      <div className="bg-base-100 p-6 rounded-xl shadow-sm border border-base-300">
+      <div className="bg-white p-6 rounded-xl shadow-sm border border-base-300">
         <div className="flex justify-between items-center mb-6">
           <h2 className="text-lg font-bold text-base-content">Historical Performance</h2>
-          <select className="select select-sm select-bordered bg-base-100 text-base-content">
+          <select className="select select-sm select-bordered bg-white text-base-content">
             <option>1M</option>
             <option>3M</option>
             <option selected>YTD</option>
@@ -95,7 +95,7 @@ export default function Portfolio() {
               className="opacity-10"
             />
           </svg>
-          <div className="absolute top-4 right-4 bg-base-100 px-3 py-1.5 rounded-lg shadow-sm border border-base-200 text-sm font-bold text-base-content">
+          <div className="absolute top-4 right-4 bg-white px-3 py-1.5 rounded-lg shadow-sm border border-base-200 text-sm font-bold text-base-content">
             +5.2% YTD
           </div>
         </div>
@@ -106,10 +106,10 @@ export default function Portfolio() {
         <h2 className="text-xl font-bold text-base-content mb-6">My Assets</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {ownedProperties.map((prop, idx) => (
-            <div key={idx} className="card bg-base-100 shadow-sm border border-base-300 flex flex-row overflow-hidden h-48 hover:shadow-md transition-shadow">
+            <div key={idx} className="card bg-white shadow-sm border border-base-300 flex flex-row overflow-hidden h-48 hover:shadow-md transition-shadow">
               <figure className="w-2/5 h-full relative">
                 <img src={prop.image} alt={prop.name} className="w-full h-full object-cover" />
-                <div className="absolute top-2 left-2 badge badge-sm bg-base-100/90 border-none text-base-content font-mono text-xs font-bold shadow-sm">
+                <div className="absolute top-2 left-2 badge badge-sm bg-white/90 border-none text-base-content font-mono text-xs font-bold shadow-sm">
                   {prop.id}
                 </div>
               </figure>
@@ -142,7 +142,7 @@ export default function Portfolio() {
       </div>
 
       {/* On-Chain Ledger */}
-      <div className="bg-base-100 rounded-xl shadow-sm border border-base-300 overflow-hidden">
+      <div className="bg-white rounded-xl shadow-sm border border-base-300 overflow-hidden">
         <div className="p-6 border-b border-base-200 flex justify-between items-center">
           <h2 className="text-lg font-bold text-base-content flex items-center gap-2">
             <DocumentTextIcon className="w-5 h-5 text-primary" />
