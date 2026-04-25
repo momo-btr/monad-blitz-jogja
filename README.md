@@ -62,6 +62,9 @@ yarn start
 
 Visit your app on: `http://localhost:3000`. You can interact with your smart contracts using the `Debug Contracts` page. You can tweak the app configuration in `packages/nextjs/scaffold.config.ts`.
 
+# SmartContract Address Stored in Monad TestNet
+Address: 0x11E0272Ed8f7A882c766f36d48543102dE99ec09
+
 - Run smart contract tests with `yarn hardhat:test`
 - Edit your smart contracts in `packages/hardhat/contracts`
 - Edit your frontend homepage at `packages/nextjs/app/page.tsx`
