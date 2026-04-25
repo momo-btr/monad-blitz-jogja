@@ -4,7 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { Address } from "@scaffold-ui/components";
-import { isAddress } from "viem";
+import { formatEther, isAddress, parseEther } from "viem";
 import { useAccount } from "wagmi";
 import {
   ArrowsRightLeftIcon,
@@ -67,9 +67,15 @@ export default function PropertyDetails() {
     contractName: "TerraformaLand",
   });
 
+  // Write: admin price update
+  const { writeContractAsync: writePriceUpdate, isPending: isPriceUpdatePending } = useScaffoldWriteContract({
+    contractName: "TerraformaLand",
+  });
+
   // Transfer form local state
   const [transferTo, setTransferTo] = useState("");
   const [showTransferForm, setShowTransferForm] = useState(false);
+  const [newPriceMon, setNewPriceMon] = useState("");
 
   const isOwner = !!connectedAddress && !!nftOwner && connectedAddress.toLowerCase() === nftOwner.toLowerCase();
 
@@ -85,6 +91,20 @@ export default function PropertyDetails() {
       notification.success(landPlot.isVerified ? "Verification revoked." : "Land certificate marked as verified!");
     } catch (err: unknown) {
       notification.error(err instanceof Error ? err.message : "Verification update failed");
+    }
+  };
+
+  const handleUpdatePrice = async () => {
+    if (!newPriceMon) return;
+    try {
+      await writePriceUpdate({
+        functionName: "updatePrice",
+        args: [tokenId, parseEther(newPriceMon)],
+      });
+      notification.success("Price updated!");
+      setNewPriceMon("");
+    } catch (err: unknown) {
+      notification.error(err instanceof Error ? err.message : "Price update failed");
     }
   };
 
@@ -214,12 +234,15 @@ export default function PropertyDetails() {
                     value: landPlot.isVerified ? "✓ Verified" : "⏳ Pending Verification",
                     className: landPlot.isVerified ? "text-success" : "text-warning",
                   },
+                  {
+                    label: "Asking Price",
+                    value: landPlot.priceWei > 0n ? `${formatEther(landPlot.priceWei)} MON` : "Not listed",
+                    className: landPlot.priceWei > 0n ? "text-primary font-bold" : "text-base-content/40",
+                  },
                 ] as Array<{ label: string; value: string; className?: string }>
               ).map((spec, idx) => (
                 <div key={idx} className="bg-base-200/50 p-4 rounded-xl border border-base-200">
-                  <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">
-                    {spec.label}
-                  </p>
+                  <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">{spec.label}</p>
                   <p className={`font-medium text-black ${spec.className ?? ""}`}>{spec.value}</p>
                 </div>
               ))}
@@ -356,6 +379,17 @@ export default function PropertyDetails() {
                 )}
               </div>
 
+              {/* Asking Price */}
+              {landPlot.priceWei > 0n && (
+                <div className="mb-4 pb-4 border-b border-base-200">
+                  <p className="text-xs text-base-content/50 font-semibold uppercase mb-1">Asking Price</p>
+                  <p className="text-3xl font-extrabold text-primary flex items-baseline gap-2">
+                    {formatEther(landPlot.priceWei)}
+                    <span className="text-sm font-medium text-base-content/50">MON</span>
+                  </p>
+                </div>
+              )}
+
               {/* Token ID */}
               <div className="mb-4 pb-4 border-b border-base-200">
                 <p className="text-xs text-black/50 font-semibold uppercase mb-1">Token</p>
@@ -384,10 +418,7 @@ export default function PropertyDetails() {
               <div className="space-y-3">
                 {/* Case 1: wallet not connected */}
                 {!connectedAddress ? (
-                  <button
-                    className="btn btn-outline border-base-300 w-full text-black/50 cursor-not-allowed"
-                    disabled
-                  >
+                  <button className="btn btn-outline border-base-300 w-full text-black/50 cursor-not-allowed" disabled>
                     Connect Wallet to Acquire
                   </button>
                 ) : isOwner ? (
@@ -497,6 +528,38 @@ export default function PropertyDetails() {
                       "Mark as Verified"
                     )}
                   </button>
+
+                  {/* Admin: Update Price */}
+                  <div className="mt-4 pt-4 border-t border-white/10">
+                    <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-2">
+                      Update Asking Price
+                    </p>
+                    <label className="input input-sm flex items-center gap-2 bg-slate-700 border-slate-600 text-white mb-2">
+                      <input
+                        type="number"
+                        placeholder="New price"
+                        min="0"
+                        step="0.000001"
+                        className="grow bg-transparent text-white placeholder-slate-400"
+                        value={newPriceMon}
+                        onChange={e => setNewPriceMon(e.target.value)}
+                      />
+                      <span className="text-slate-400 text-xs font-semibold">MON</span>
+                    </label>
+                    <button
+                      className="btn btn-sm btn-outline border-primary text-primary hover:bg-primary hover:text-primary-content w-full"
+                      onClick={handleUpdatePrice}
+                      disabled={isPriceUpdatePending || !newPriceMon}
+                    >
+                      {isPriceUpdatePending ? (
+                        <>
+                          <span className="loading loading-spinner loading-xs" /> Updating…
+                        </>
+                      ) : (
+                        "Set Price"
+                      )}
+                    </button>
+                  </div>
                 </div>
               </div>
             )}

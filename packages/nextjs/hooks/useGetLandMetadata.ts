@@ -9,6 +9,7 @@ export type LandPlot = {
   areaSqm: bigint;
   NIB_NomorIdentitasBidang: string;
   isVerified: boolean;
+  priceWei: bigint;
 };
 
 export type IpfsMetadata = {

@@ -7,7 +7,7 @@ import { GenericContractsDeclaration } from "~~/utils/scaffold-eth/contract";
 const deployedContracts = {
   10143: {
     TerraformaLand: {
-      address: "0xc5022DA388e15DCC7fFb764f3f7a8B49c8aC48dD",
+      address: "0x11E0272Ed8f7A882c766f36d48543102dE99ec09",
       abi: [
         {
           inputs: [],
@@ -197,6 +197,25 @@ const deployedContracts = {
           inputs: [
             {
               indexed: true,
+              internalType: "uint256",
+              name: "tokenId",
+              type: "uint256",
+            },
+            {
+              indexed: false,
+              internalType: "uint256",
+              name: "priceWei",
+              type: "uint256",
+            },
+          ],
+          name: "PriceUpdated",
+          type: "event",
+        },
+        {
+          anonymous: false,
+          inputs: [
+            {
+              indexed: true,
               internalType: "address",
               name: "from",
               type: "address",
@@ -358,6 +377,11 @@ const deployedContracts = {
                   name: "isVerified",
                   type: "bool",
                 },
+                {
+                  internalType: "uint256",
+                  name: "priceWei",
+                  type: "uint256",
+                },
               ],
               internalType: "struct TerraformaLand.LandPlot",
               name: "",
@@ -449,6 +473,11 @@ const deployedContracts = {
               name: "isVerified",
               type: "bool",
             },
+            {
+              internalType: "uint256",
+              name: "priceWei",
+              type: "uint256",
+            },
           ],
           stateMutability: "view",
           type: "function",
@@ -484,6 +513,11 @@ const deployedContracts = {
               internalType: "string",
               name: "nib",
               type: "string",
+            },
+            {
+              internalType: "uint256",
+              name: "priceWei",
+              type: "uint256",
             },
           ],
           name: "mintLandCertificate",
@@ -680,6 +714,24 @@ const deployedContracts = {
               type: "uint256",
             },
             {
+              internalType: "uint256",
+              name: "priceWei",
+              type: "uint256",
+            },
+          ],
+          name: "updatePrice",
+          outputs: [],
+          stateMutability: "nonpayable",
+          type: "function",
+        },
+        {
+          inputs: [
+            {
+              internalType: "uint256",
+              name: "id",
+              type: "uint256",
+            },
+            {
               internalType: "bool",
               name: "verified",
               type: "bool",
@@ -705,7 +757,7 @@ const deployedContracts = {
         tokenURI: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
         transferFrom: "@openzeppelin/contracts/token/ERC721/ERC721.sol",
       },
-      deployedOnBlock: 27701312,
+      deployedOnBlock: 27713926,
     },
     YourContract: {
       address: "0x5DAcf3f78e4763c089166E8Ed942A4053b5AF2da",

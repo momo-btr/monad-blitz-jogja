@@ -3,6 +3,7 @@
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
 import { Address } from "@scaffold-ui/components";
+import { formatEther } from "viem";
 import { useAccount } from "wagmi";
 import { CheckCircleIcon, ClockIcon, DocumentTextIcon, MapIcon } from "@heroicons/react/24/outline";
 import { useScaffoldReadContract } from "~~/hooks/scaffold-eth";
@@ -141,6 +142,14 @@ const PortfolioCard = ({ tokenId, connectedAddress, onAreaLoaded }: PortfolioCar
             <Address address={currentOwner} />
           </div>
         )}
+
+        {/* Asking Price */}
+        <div>
+          <p className="text-base-content/50 text-xs font-medium">Asking Price</p>
+          <p className="font-bold text-primary">
+            {landPlot.priceWei > 0n ? `${formatEther(landPlot.priceWei)} MON` : "—"}
+          </p>
+        </div>
 
         {/* CTA */}
         <div className="mt-auto pt-3 border-t border-base-200">
