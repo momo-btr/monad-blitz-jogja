@@ -18,7 +18,7 @@ export default function Hero() {
         </p>
 
         <div className="flex gap-4">
-          <button className="bg-emerald-600 hover:bg-forest-green text-white font-body font-bold px-8 py-4 transition-all flex items-center gap-2 rounded-md" type="button">
+          <button className="bg-emerald-600 hover:bg-forest-green text-black font-body font-bold px-8 py-4 transition-all flex items-center gap-2 rounded-md" type="button">
             Explore Marketplace
             <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
               <path
@@ -53,7 +53,7 @@ export default function Hero() {
 
         <div className="absolute -bottom-8 -left-8 bg-white p-5 rounded-lg shadow-ambient border border-gray-100 w-72">
           <div className="flex items-center gap-3 mb-4">
-            <div className="w-10 h-10 bg-emerald-600 rounded-base flex items-center justify-center text-white font-bold">
+            <div className="w-10 h-10 bg-emerald-600 rounded-base flex items-center justify-center text-black font-bold">
               LC
             </div>
             <div>

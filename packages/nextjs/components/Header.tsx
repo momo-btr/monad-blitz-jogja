@@ -24,12 +24,12 @@ export const Header = () => {
     if (paths.length === 0) return null;
 
     return (
-      <div className="flex items-center text-sm text-base-content/50 uppercase font-semibold tracking-wide">
+      <div className="flex items-center text-sm text-black/50 uppercase font-semibold tracking-wide">
         <Link href="/" className="hover:text-primary">
           Home
         </Link>
         <span className="mx-2">›</span>
-        <span className="text-base-content">{paths[0]}</span>
+        <span className="text-black">{paths[0]}</span>
       </div>
     );
   };

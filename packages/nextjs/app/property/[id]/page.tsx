@@ -64,7 +64,7 @@ export default function PropertyDetails() {
   return (
     <div className="space-y-6 animate-fade-in max-w-7xl mx-auto pb-12">
       {/* Breadcrumbs */}
-      <div className="text-sm breadcrumbs text-base-content/60">
+      <div className="text-sm breadcrumbs text-black/60">
         <ul>
           <li>
             <Link href="/marketplace">Marketplace</Link>
@@ -72,7 +72,7 @@ export default function PropertyDetails() {
           <li>
             <Link href="/marketplace?region=Sumatra">Sumatra Region</Link>
           </li>
-          <li className="font-semibold text-base-content">{metadata?.name || "Property Details"}</li>
+          <li className="font-semibold text-black">{metadata?.name || "Property Details"}</li>
         </ul>
       </div>
 
@@ -83,12 +83,12 @@ export default function PropertyDetails() {
           <div className="space-y-4">
             <div className="flex justify-between items-start">
               <div>
-                <h1 className="text-3xl font-bold text-base-content flex items-center gap-2 mb-2">
+                <h1 className="text-3xl font-bold text-black flex items-center gap-2 mb-2">
                   {metadata?.name || "Sumatra Palm Estate"}
                   <CheckBadgeIcon className="w-8 h-8 text-primary" />
                 </h1>
-                <p className="text-base-content/70 flex items-center gap-1.5 text-lg">
-                  <MapPinIcon className="w-5 h-5 text-base-content/50" />
+                <p className="text-black/70 flex items-center gap-1.5 text-lg">
+                  <MapPinIcon className="w-5 h-5 text-black/50" />
                   South Sumatra, Indonesia
                 </p>
               </div>
@@ -113,8 +113,8 @@ export default function PropertyDetails() {
 
           {/* Technical Description */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300">
-            <h2 className="text-xl font-bold text-base-content mb-4">Property Overview</h2>
-            <p className="text-base-content/80 leading-relaxed">
+            <h2 className="text-xl font-bold text-black mb-4">Property Overview</h2>
+            <p className="text-black/80 leading-relaxed">
               {metadata?.description ||
                 "Prime agricultural land situated in the heart of South Sumatra. This parcel boasts highly fertile soil historically yielding above-average palm and rubber outputs. The estate comes fully verified on-chain, carrying a certified carbon offset rating, making it an ideal asset for eco-conscious institutional investors seeking steady yield."}
             </p>
@@ -122,14 +122,14 @@ export default function PropertyDetails() {
 
           {/* Technical Specifications Grid */}
           <div className="bg-white p-8 rounded-2xl shadow-sm border border-base-300">
-            <h2 className="text-xl font-bold text-base-content mb-6">Technical Specifications</h2>
+            <h2 className="text-xl font-bold text-black mb-6">Technical Specifications</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-6">
               {techSpecs.map((spec, idx) => (
                 <div key={idx} className="bg-base-200/50 p-4 rounded-xl border border-base-200">
-                  <p className="text-xs font-semibold text-base-content/50 uppercase tracking-wider mb-1">
+                  <p className="text-xs font-semibold text-black/50 uppercase tracking-wider mb-1">
                     {spec.label}
                   </p>
-                  <p className="font-medium text-base-content">{spec.value}</p>
+                  <p className="font-medium text-black">{spec.value}</p>
                 </div>
               ))}
             </div>
@@ -138,7 +138,7 @@ export default function PropertyDetails() {
           {/* Interactive Map */}
           <div className="bg-white rounded-2xl shadow-sm border border-base-300 overflow-hidden flex flex-col">
             <div className="p-6 border-b border-base-200 flex justify-between items-center bg-white/50 backdrop-blur">
-              <h2 className="text-xl font-bold text-base-content flex items-center gap-2">
+              <h2 className="text-xl font-bold text-black flex items-center gap-2">
                 <GlobeAltIcon className="w-6 h-6 text-primary" />
                 Geospatial Boundaries
               </h2>
@@ -149,7 +149,7 @@ export default function PropertyDetails() {
                 <MapExplorer geoJsonData={geoJson} />
               </div>
             </div>
-            <div className="p-4 bg-base-200/30 border-t border-base-200 text-sm text-base-content/60 flex justify-between">
+            <div className="p-4 bg-base-200/30 border-t border-base-200 text-sm text-black/60 flex justify-between">
               <span>Coordinate System: WGS 84</span>
               <span>Polygon Vertices: {geoJson?.geometry?.coordinates?.[0]?.length || 0}</span>
             </div>
@@ -158,14 +158,14 @@ export default function PropertyDetails() {
           {/* Provenance History */}
           <div className="bg-white rounded-2xl shadow-sm border border-base-300 overflow-hidden">
             <div className="p-6 border-b border-base-200">
-              <h2 className="text-xl font-bold text-base-content flex items-center gap-2">
+              <h2 className="text-xl font-bold text-black flex items-center gap-2">
                 <ArrowsRightLeftIcon className="w-6 h-6 text-primary" />
                 Provenance History
               </h2>
             </div>
             <div className="overflow-x-auto">
               <table className="table w-full">
-                <thead className="bg-base-200/50 text-base-content/70">
+                <thead className="bg-base-200/50 text-black/70">
                   <tr>
                     <th>Date</th>
                     <th>Action</th>
@@ -180,10 +180,10 @@ export default function PropertyDetails() {
                       key={idx}
                       className="hover:bg-base-200/30 transition-colors border-b border-base-200 last:border-0"
                     >
-                      <td className="text-sm text-base-content/70">{log.date}</td>
-                      <td className="font-medium text-base-content">{log.action}</td>
-                      <td className="text-sm text-base-content/70">{log.from}</td>
-                      <td className="text-sm text-base-content/70">{log.to}</td>
+                      <td className="text-sm text-black/70">{log.date}</td>
+                      <td className="font-medium text-black">{log.action}</td>
+                      <td className="text-sm text-black/70">{log.from}</td>
+                      <td className="text-sm text-black/70">{log.to}</td>
                       <td>
                         <Link
                           href={`https://explorer.monad-testnet.io/tx/${log.tx}`}
@@ -207,34 +207,34 @@ export default function PropertyDetails() {
           <div className="sticky top-24 space-y-6">
             <div className="bg-white p-6 rounded-2xl shadow-lg border border-base-300">
               <div className="flex justify-between items-center mb-6">
-                <span className="text-base-content/60 font-medium">Asking Price</span>
+                <span className="text-black/60 font-medium">Asking Price</span>
                 <span className="badge badge-success bg-success/10 text-success border-none font-bold">Available</span>
               </div>
 
               <div className="mb-6">
-                <h3 className="text-4xl font-extrabold text-base-content flex items-baseline gap-2">
-                  450 <span className="text-lg font-medium text-base-content/50">MONAD</span>
+                <h3 className="text-4xl font-extrabold text-black flex items-baseline gap-2">
+                  450 <span className="text-lg font-medium text-black/50">MONAD</span>
                 </h3>
-                <p className="text-sm text-base-content/50 mt-1">~ $12,450.00 USD equivalent</p>
+                <p className="text-sm text-black/50 mt-1">~ $12,450.00 USD equivalent</p>
               </div>
 
               <div className="space-y-3">
                 <button className="btn btn-primary w-full text-white shadow-md shadow-primary/20 hover:shadow-lg hover:shadow-primary/40 transition-shadow">
                   Acquire Asset
                 </button>
-                <button className="btn btn-outline border-base-300 text-base-content hover:bg-base-200 hover:border-base-300 w-full">
+                <button className="btn btn-outline border-base-300 text-black hover:bg-base-200 hover:border-base-300 w-full">
                   Place Bid
                 </button>
               </div>
 
               <div className="mt-6 pt-6 border-t border-base-200">
                 <div className="flex justify-between text-sm mb-2">
-                  <span className="text-base-content/60">Estimated Yield</span>
+                  <span className="text-black/60">Estimated Yield</span>
                   <span className="font-semibold text-success">9.2% APY</span>
                 </div>
                 <div className="flex justify-between text-sm">
-                  <span className="text-base-content/60">Platform Fee</span>
-                  <span className="font-semibold text-base-content">1.5%</span>
+                  <span className="text-black/60">Platform Fee</span>
+                  <span className="font-semibold text-black">1.5%</span>
                 </div>
               </div>
             </div>
@@ -259,7 +259,7 @@ export default function PropertyDetails() {
 
             {/* On-Chain Assets / Documents */}
             <div className="bg-white p-6 rounded-2xl shadow-sm border border-base-300">
-              <h3 className="text-lg font-bold text-base-content mb-4">On-Chain Assets</h3>
+              <h3 className="text-lg font-bold text-black mb-4">On-Chain Assets</h3>
               <div className="space-y-3">
                 {onChainAssets.map((doc, idx) => (
                   <div
@@ -267,12 +267,12 @@ export default function PropertyDetails() {
                     className="flex items-center justify-between p-3 bg-base-200/50 rounded-xl hover:bg-base-200 transition-colors cursor-pointer group"
                   >
                     <div className="flex items-center gap-3">
-                      <div className="p-2 bg-white rounded-lg shadow-sm text-primary group-hover:text-primary-content group-hover:bg-primary transition-colors">
+                      <div className="p-2 bg-white rounded-lg shadow-sm text-primary group-hover:text-black group-hover:bg-primary transition-colors">
                         <DocumentArrowDownIcon className="w-5 h-5" />
                       </div>
                       <div>
-                        <p className="text-sm font-semibold text-base-content">{doc.name}</p>
-                        <p className="text-xs text-base-content/50">
+                        <p className="text-sm font-semibold text-black">{doc.name}</p>
+                        <p className="text-xs text-black/50">
                           {doc.type} • {doc.size}
                         </p>
                       </div>

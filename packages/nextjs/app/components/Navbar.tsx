@@ -19,7 +19,7 @@ export default function Navbar() {
         <button className="p-2" type="button" aria-label="Select language">
           EN
         </button>
-        <button className="bg-[#065F46] text-white px-5 py-2.5 rounded-md text-sm font-semibold" type="button">
+        <button className="bg-[#065F46] text-black px-5 py-2.5 rounded-md text-sm font-semibold" type="button">
           Connect Wallet
         </button>
       </div>

@@ -64,15 +64,15 @@ export default function Dashboard() {
       {/* Header Section */}
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-base-content mb-1">Investment Overview</h1>
-          <p className="text-base-content/60">Welcome back. Your portfolio grew by 4.2% this month.</p>
+          <h1 className="text-3xl font-bold text-black mb-1">Investment Overview</h1>
+          <p className="text-black/60">Welcome back. Your portfolio grew by 4.2% this month.</p>
         </div>
         <div className="flex items-center gap-3">
-          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-base-content bg-surface font-normal">
+          <button className="btn btn-outline border-base-300 hover:bg-base-200 hover:text-black bg-surface font-normal">
             <ArrowDownTrayIcon className="w-4 h-4 mr-2" />
             Reports
           </button>
-          <button className="btn btn-primary font-normal text-primary-content">
+          <button className="btn btn-primary font-normal text-black">
             <PlusIcon className="w-4 h-4 mr-1" />
             Buy Land
           </button>
@@ -85,13 +85,13 @@ export default function Dashboard() {
         <div className="bg-surface rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
-              <span className="text-sm font-semibold text-base-content/50 uppercase tracking-wider">
+              <span className="text-sm font-semibold text-black/50 uppercase tracking-wider">
                 Total Portfolio Value
               </span>
               <span className="bg-[#E6F4F1] text-primary px-3 py-1 rounded-full text-sm font-medium">+12.5%</span>
             </div>
-            <h2 className="text-5xl font-bold text-base-content mb-4 tracking-tight">$2,485,900</h2>
-            <p className="text-base-content/70 text-sm">
+            <h2 className="text-5xl font-bold text-black mb-4 tracking-tight">$2,485,900</h2>
+            <p className="text-black/70 text-sm">
               42 On-Chain Parcels
               <br />
               Verified
@@ -100,11 +100,11 @@ export default function Dashboard() {
 
           <div className="flex items-center gap-8 mt-12 pt-6 border-t border-base-200">
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Liquidity</p>
+              <p className="text-xs text-black/50 uppercase font-semibold mb-1">Liquidity</p>
               <p className="text-lg font-medium text-primary">$142,000</p>
             </div>
             <div>
-              <p className="text-xs text-base-content/50 uppercase font-semibold mb-1">Yield (APY)</p>
+              <p className="text-xs text-black/50 uppercase font-semibold mb-1">Yield (APY)</p>
               <p className="text-lg font-medium text-primary">8.2%</p>
             </div>
           </div>
@@ -114,12 +114,12 @@ export default function Dashboard() {
         <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
           <div className="absolute top-4 left-4 z-[400] bg-surface/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
-            <span className="text-sm font-medium text-base-content">Interactive Explorer: Central Valley</span>
+            <span className="text-sm font-medium text-black">Interactive Explorer: Central Valley</span>
           </div>
           {/* Controls Overlay */}
           <div className="absolute bottom-4 right-4 z-[400] flex gap-2">
             <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
-              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-black/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -129,7 +129,7 @@ export default function Dashboard() {
               </svg>
             </button>
             <button className="w-10 h-10 bg-surface rounded-lg shadow-md flex items-center justify-center hover:bg-base-200 transition-colors">
-              <svg className="w-5 h-5 text-base-content/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <svg className="w-5 h-5 text-black/70" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -151,12 +151,12 @@ export default function Dashboard() {
         {/* Recent Transactions */}
         <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-base-200 flex justify-between items-center">
-            <h3 className="font-semibold text-base-content">Recent Land Transactions</h3>
+            <h3 className="font-semibold text-black">Recent Land Transactions</h3>
             <button className="text-sm text-primary font-medium hover:underline">View All</button>
           </div>
           <div className="overflow-x-auto">
             <table className="table w-full text-sm">
-              <thead className="bg-base-200 text-base-content/60 font-medium">
+              <thead className="bg-base-200 text-black/60 font-medium">
                 <tr>
                   <th className="py-4 font-normal uppercase tracking-wider text-xs">Asset</th>
                   <th className="py-4 font-normal uppercase tracking-wider text-xs">ID</th>
@@ -173,14 +173,14 @@ export default function Dashboard() {
                           {tx.icon}
                         </div>
                         <div>
-                          <p className="font-medium text-base-content">{tx.name}</p>
-                          <p className="text-xs text-base-content/50">{tx.location}</p>
+                          <p className="font-medium text-black">{tx.name}</p>
+                          <p className="text-xs text-black/50">{tx.location}</p>
                         </div>
                       </div>
                     </td>
-                    <td className="py-4 font-mono text-base-content/70">{tx.id}</td>
-                    <td className="py-4 text-base-content/70">{tx.type}</td>
-                    <td className="py-4 font-medium text-base-content">{tx.value}</td>
+                    <td className="py-4 font-mono text-black/70">{tx.id}</td>
+                    <td className="py-4 text-black/70">{tx.type}</td>
+                    <td className="py-4 font-medium text-black">{tx.value}</td>
                   </tr>
                 ))}
               </tbody>
@@ -191,7 +191,7 @@ export default function Dashboard() {
         {/* Asset Allocation */}
         <div className="flex flex-col gap-6">
           <div className="bg-surface rounded-2xl p-6 border border-base-300 shadow-sm flex-1">
-            <h3 className="font-semibold text-base-content mb-6">Asset Allocation</h3>
+            <h3 className="font-semibold text-black mb-6">Asset Allocation</h3>
             <div className="flex flex-col gap-5">
               {[
                 { label: "Agricultural", value: "45%", width: "45%", color: "bg-primary" },
@@ -200,8 +200,8 @@ export default function Dashboard() {
               ].map((item, idx) => (
                 <div key={idx}>
                   <div className="flex justify-between text-sm mb-2">
-                    <span className="text-base-content/80">{item.label}</span>
-                    <span className="font-medium text-base-content">{item.value}</span>
+                    <span className="text-black/80">{item.label}</span>
+                    <span className="font-medium text-black">{item.value}</span>
                   </div>
                   <div className="w-full h-2 bg-base-200 rounded-full overflow-hidden">
                     <div className={`h-full ${item.color} rounded-full`} style={{ width: item.width }}></div>
