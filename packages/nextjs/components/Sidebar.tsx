@@ -3,12 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import {
+  ArrowRightOnRectangleIcon,
+  BriefcaseIcon,
   ChartBarSquareIcon,
   HomeIcon,
-  ShoppingBagIcon,
-  BriefcaseIcon,
   QuestionMarkCircleIcon,
-  ArrowRightOnRectangleIcon,
+  ShoppingBagIcon,
 } from "@heroicons/react/24/outline";
 
 export const Sidebar = () => {
@@ -22,7 +22,7 @@ export const Sidebar = () => {
   ];
 
   return (
-    <div className="w-64 bg-base min-h-screen border-r border-base-300 flex flex-col justify-between p-4 sticky top-0 h-screen">
+    <div className="w-64 min-h-screen border-r border-base-300 flex flex-col justify-between p-4 sticky top-0 h-screen">
       <div>
         <div className="mb-8 pl-4 pt-2">
           <Link href="/" className="flex items-center gap-2">

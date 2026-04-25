@@ -10,7 +10,7 @@ import {
   MapPinIcon,
   ShieldCheckIcon,
 } from "@heroicons/react/24/outline";
-import MapExplorer from "~~/components/DynamicMap";
+import { DynamicMap } from "~~/components/DynamicMap";
 import { useGetLandMetadata } from "~~/hooks/useGetLandMetadata";
 
 export default function PropertyDetails() {
@@ -146,7 +146,7 @@ export default function PropertyDetails() {
             <div className="p-0 border-t border-base-200">
               {/* Force height strictly to fit the design */}
               <div className="h-[450px] w-full">
-                <MapExplorer geoJsonData={geoJson} />
+                <DynamicMap geojson={geoJson} />
               </div>
             </div>
             <div className="p-4 bg-base-200/30 border-t border-base-200 text-sm text-black/60 flex justify-between">

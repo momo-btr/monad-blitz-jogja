@@ -35,7 +35,7 @@ export const Header = () => {
   };
 
   return (
-    <div className="sticky top-0 z-20 w-full bg-surface shadow-sm border-b border-base-300 flex justify-between items-center px-6 py-4 min-h-[72px]">
+    <div className="sticky top-0 z-20 w-full bg-base-100 shadow-sm border-b border-base-300 flex justify-between items-center px-6 py-4 min-h-[72px]">
       {/* Mobile Menu & Logo */}
       <div className="flex items-center gap-4 lg:hidden">
         <div className="dropdown" ref={burgerMenuRef}>
@@ -86,26 +86,13 @@ export const Header = () => {
           </div>
           <input
             type="text"
-            className="block w-64 lg:w-80 pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5 bg-blue-50/30 placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm transition duration-150 ease-in-out"
+            className="block w-64 lg:w-80 pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5  placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm transition duration-150 ease-in-out"
             placeholder="Search parcels, owners, or IDs"
           />
         </div>
 
         {/* Action Buttons */}
         <RainbowKitCustomConnectButton />
-
-        <button className="p-2 text-gray-400 hover:text-gray-500 transition-colors">
-          <BellIcon className="w-6 h-6" />
-        </button>
-        <button className="p-2 text-gray-400 hover:text-gray-500 transition-colors">
-          <Cog8ToothIcon className="w-6 h-6" />
-        </button>
-
-        {/* Avatar */}
-        <div className="h-8 w-8 rounded-full bg-gray-200 overflow-hidden ring-2 ring-white ml-2">
-          {/* Mock Avatar */}
-          <div className="w-full h-full bg-slate-400 flex items-center justify-center text-white text-xs">US</div>
-        </div>
       </div>
     </div>
   );

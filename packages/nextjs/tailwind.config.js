@@ -6,9 +6,6 @@ module.exports = {
       colors: {
         primary: "#2A9D8F", // Terraforma Green
         "primary-content": "#FFFFFF",
-        base: "#FFFFFF", // White Background
-        surface: "#FFFFFF", // Card Backgrounds
-        "base-content": "#111827", // Primary Text
       },
       boxShadow: {
         center: "0 0 12px -2px rgb(0 0 0 / 0.05)",
@@ -19,15 +16,29 @@ module.exports = {
   daisyui: {
     themes: [
       {
-        terraforma: {
+        light: {
           primary: "#2A9D8F",
           "primary-content": "#ffffff",
           secondary: "#264653",
           accent: "#E9C46A",
           neutral: "#2b3440",
           "base-100": "#FFFFFF",
-          "base-200": "#FFFFFF",
-          "base-300": "#FFFFFF",
+          "base-200": "#F3F4F6",
+          "base-300": "#E5E7EB",
+          info: "#3abff8",
+          success: "#36d399",
+          warning: "#fbbd23",
+          error: "#f87272",
+        },
+        dark: {
+          primary: "#2A9D8F",
+          "primary-content": "#ffffff",
+          secondary: "#264653",
+          accent: "#E9C46A",
+          neutral: "#2b3440",
+          "base-100": "#111827",
+          "base-200": "#1F2937",
+          "base-300": "#374151",
           info: "#3abff8",
           success: "#36d399",
           warning: "#fbbd23",

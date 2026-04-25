@@ -1,4 +1,5 @@
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Hero() {
   return (
@@ -18,18 +19,23 @@ export default function Hero() {
         </p>
 
         <div className="flex gap-4">
-          <button className="bg-emerald-600 hover:bg-forest-green text-black font-body font-bold px-8 py-4 transition-all flex items-center gap-2 rounded-md" type="button">
-            Explore Marketplace
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
-              <path
-                d="M4.166 10h11.667M10 4.166L15.833 10 10 15.833"
-                stroke="currentColor"
-                strokeWidth="2"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
-          </button>
+          <Link href="/marketplace">
+            <button
+              className="bg-emerald-600 hover:bg-forest-green text-white font-body font-bold px-8 py-4 transition-all flex items-center gap-2 rounded-md"
+              type="button"
+            >
+              Explore Marketplace
+              <svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
+                <path
+                  d="M4.166 10h11.667M10 4.166L15.833 10 10 15.833"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </button>
+          </Link>
           <button
             className="border border-emerald-600 border-outline-variant hover:bg-surface-container-low text-outline font-body font-bold px-8 py-4 transition-all text-black rounded-md"
             type="button"

@@ -1,28 +1,19 @@
 "use client";
 
 import { ArrowDownTrayIcon, BuildingOffice2Icon, MapIcon, PlusIcon } from "@heroicons/react/24/outline";
-import DynamicMap from "~~/components/DynamicMap";
+import { DynamicMap } from "~~/components/DynamicMap";
 
 // Mock GeoJSON for the dashboard map
 const mockGeoJson = {
-  type: "FeatureCollection",
-  features: [
-    {
-      type: "Feature",
-      properties: {},
-      geometry: {
-        type: "Polygon",
-        coordinates: [
-          [
-            [113.8, -0.7],
-            [114.0, -0.7],
-            [114.0, -0.9],
-            [113.8, -0.9],
-            [113.8, -0.7],
-          ],
-        ],
-      },
-    },
+  type: "Polygon",
+  coordinates: [
+    [
+      [113.8, -0.7],
+      [114.0, -0.7],
+      [114.0, -0.9],
+      [113.8, -0.9],
+      [113.8, -0.7],
+    ],
   ],
 };
 
@@ -82,7 +73,7 @@ export default function Dashboard() {
       {/* Top Grid: KPI & Map */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* KPI Card */}
-        <div className="bg-surface rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
+        <div className="bg-base-100 rounded-2xl p-8 border border-base-300 shadow-sm flex flex-col justify-between">
           <div>
             <div className="flex items-center justify-between mb-4">
               <span className="text-sm font-semibold text-black/50 uppercase tracking-wider">
@@ -111,8 +102,8 @@ export default function Dashboard() {
         </div>
 
         {/* Map Explorer */}
-        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
-          <div className="absolute top-4 left-4 z-[400] bg-surface/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
+        <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden relative h-[450px]">
+          <div className="absolute top-4 left-4 z-[400] bg-base-100/90 backdrop-blur px-4 py-2 rounded-full border border-base-300 shadow-sm flex items-center gap-2">
             <div className="w-2 h-2 rounded-full bg-primary animate-pulse"></div>
             <span className="text-sm font-medium text-black">Interactive Explorer: Central Valley</span>
           </div>
@@ -141,7 +132,7 @@ export default function Dashboard() {
           </div>
           {/* Real Leaflet Map component */}
           <div className="w-full h-full">
-            <DynamicMap geoJsonData={mockGeoJson} center={[-0.8, 113.9]} zoom={10} interactive={true} />
+            <DynamicMap geojson={mockGeoJson} className="h-full" />
           </div>
         </div>
       </div>
@@ -149,7 +140,7 @@ export default function Dashboard() {
       {/* Bottom Grid: Transactions & Allocations */}
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         {/* Recent Transactions */}
-        <div className="lg:col-span-2 bg-surface rounded-2xl border border-base-300 shadow-sm overflow-hidden">
+        <div className="lg:col-span-2 bg-base-100 rounded-2xl border border-base-300 shadow-sm overflow-hidden">
           <div className="p-6 border-b border-base-200 flex justify-between items-center">
             <h3 className="font-semibold text-black">Recent Land Transactions</h3>
             <button className="text-sm text-primary font-medium hover:underline">View All</button>
