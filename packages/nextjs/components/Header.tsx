@@ -1,102 +1,98 @@
 "use client";
 
-import React, { useRef } from "react";
-import Image from "next/image";
+import React, { useCallback, useRef, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { hardhat } from "viem/chains";
-import { Bars3Icon, BugAntIcon } from "@heroicons/react/24/outline";
-import { FaucetButton, RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
-import { useOutsideClick, useTargetNetwork } from "~~/hooks/scaffold-eth";
+import { Bars3Icon, MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { RainbowKitCustomConnectButton } from "~~/components/scaffold-eth";
+import { useOutsideClick } from "~~/hooks/scaffold-eth";
 
-type HeaderMenuLink = {
-  label: string;
-  href: string;
-  icon?: React.ReactNode;
-};
+export const Header = () => {
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const burgerMenuRef = useRef<HTMLDivElement>(null);
 
-export const menuLinks: HeaderMenuLink[] = [
-  {
-    label: "Home",
-    href: "/",
-  },
-  {
-    label: "Debug Contracts",
-    href: "/debug",
-    icon: <BugAntIcon className="h-4 w-4" />,
-  },
-];
+  useOutsideClick(
+    burgerMenuRef,
+    useCallback(() => setIsDrawerOpen(false), []),
+  );
 
-export const HeaderMenuLinks = () => {
   const pathname = usePathname();
 
-  return (
-    <>
-      {menuLinks.map(({ label, href, icon }) => {
-        const isActive = pathname === href;
-        return (
-          <li key={href}>
-            <Link
-              href={href}
-              passHref
-              className={`${
-                isActive ? "bg-secondary shadow-md" : ""
-              } hover:bg-secondary hover:shadow-md focus:!bg-secondary active:!text-neutral py-1.5 px-3 text-sm rounded-full gap-2 grid grid-flow-col`}
-            >
-              {icon}
-              <span>{label}</span>
-            </Link>
-          </li>
-        );
-      })}
-    </>
-  );
-};
+  // Helper to get active breadcrumbs
+  const getBreadcrumbs = () => {
+    const paths = pathname.split("/").filter(Boolean);
+    if (paths.length === 0) return null;
 
-/**
- * Site header
- */
-export const Header = () => {
-  const { targetNetwork } = useTargetNetwork();
-  const isLocalNetwork = targetNetwork.id === hardhat.id;
-
-  const burgerMenuRef = useRef<HTMLDetailsElement>(null);
-  useOutsideClick(burgerMenuRef, () => {
-    burgerMenuRef?.current?.removeAttribute("open");
-  });
-
-  return (
-    <div className="sticky lg:static top-0 navbar bg-base-100 min-h-0 shrink-0 justify-between z-20 shadow-md shadow-secondary px-0 sm:px-2">
-      <div className="navbar-start w-auto lg:w-1/2">
-        <details className="dropdown" ref={burgerMenuRef}>
-          <summary className="ml-1 btn btn-ghost lg:hidden hover:bg-transparent">
-            <Bars3Icon className="h-1/2" />
-          </summary>
-          <ul
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow-sm bg-base-100 rounded-box w-52"
-            onClick={() => {
-              burgerMenuRef?.current?.removeAttribute("open");
-            }}
-          >
-            <HeaderMenuLinks />
-          </ul>
-        </details>
-        <Link href="/" passHref className="hidden lg:flex items-center gap-2 ml-4 mr-6 shrink-0">
-          <div className="flex relative w-10 h-10">
-            <Image alt="SE2 logo" className="cursor-pointer" fill src="/logo.svg" />
-          </div>
-          <div className="flex flex-col">
-            <span className="font-bold leading-tight">Scaffold-ETH</span>
-            <span className="text-xs">Ethereum dev stack</span>
-          </div>
+    return (
+      <div className="flex items-center text-sm text-black/50 uppercase font-semibold tracking-wide">
+        <Link href="/" className="hover:text-primary">
+          Home
         </Link>
-        <ul className="hidden lg:flex lg:flex-nowrap menu menu-horizontal px-1 gap-2">
-          <HeaderMenuLinks />
-        </ul>
+        <span className="mx-2">›</span>
+        <span className="text-black">{paths[0]}</span>
       </div>
-      <div className="navbar-end grow mr-4">
+    );
+  };
+
+  return (
+    <div className="sticky top-0 z-20 w-full bg-base-100 shadow-sm border-b border-base-300 flex justify-between items-center px-6 py-4 min-h-[72px]">
+      {/* Mobile Menu & Logo */}
+      <div className="flex items-center gap-4 lg:hidden">
+        <div className="dropdown" ref={burgerMenuRef}>
+          <label
+            tabIndex={0}
+            className={`ml-1 btn btn-ghost ${isDrawerOpen ? "hover:bg-secondary" : "hover:bg-transparent"}`}
+            onClick={() => setIsDrawerOpen(prev => !prev)}
+          >
+            <Bars3Icon className="h-6 w-6" />
+          </label>
+          {isDrawerOpen && (
+            <ul
+              tabIndex={0}
+              className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-white rounded-box w-52"
+              onClick={() => setIsDrawerOpen(false)}
+            >
+              <li>
+                <Link href="/dashboard">Dashboard</Link>
+              </li>
+              <li>
+                <Link href="/marketplace">Marketplace</Link>
+              </li>
+              <li>
+                <Link href="/portfolio">Portfolio</Link>
+              </li>
+              <li>
+                <Link href="/analytics">Analytics</Link>
+              </li>
+            </ul>
+          )}
+        </div>
+        <Link href="/" className="flex items-center gap-2 lg:hidden">
+          <span className="font-bold text-lg">
+            Terra<span className="text-primary">Chain</span>
+          </span>
+        </Link>
+      </div>
+
+      {/* Desktop Breadcrumbs/Navigation (Left) */}
+      <div className="hidden lg:flex flex-col">{getBreadcrumbs()}</div>
+
+      {/* Right side (Search & User Actions) */}
+      <div className="flex items-center gap-4">
+        {/* Search Bar */}
+        <div className="relative hidden md:block">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <MagnifyingGlassIcon className="h-5 w-5 text-gray-400" aria-hidden="true" />
+          </div>
+          <input
+            type="text"
+            className="block w-64 lg:w-80 pl-10 pr-3 py-2 border border-gray-300 rounded-md leading-5  placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:border-primary focus:ring-1 focus:ring-primary sm:text-sm transition duration-150 ease-in-out"
+            placeholder="Search parcels, owners, or IDs"
+          />
+        </div>
+
+        {/* Action Buttons */}
         <RainbowKitCustomConnectButton />
-        {isLocalNetwork && <FaucetButton />}
       </div>
     </div>
   );
